@@ -1,0 +1,35 @@
+baseurl = "https://www.sandersdenardi.com/"
+title = "Sanders DeNardi"
+languageCode = "en-US"
+theme = "hyde-x"
+pygmentsuseclasses = true
+paginate = 10
+
+[author]
+    name = "Sanders DeNardi"
+    linkHome = true
+
+[taxonomies]
+    category = "categories"
+
+[params]
+    truncate = true
+    hideReadingTime = true
+    hideCopyright = true
+    theme = "theme-base-00"
+    highlight = "solarized_dark"
+    hideHome = true
+    googleAnalytics = "UA-43803722-1"
+
+    # Sidebar social links, these must be full URLs.
+    github = "https://github.com/sedenardi"
+    twitter = "https://twitter.com/srednass"
+    email = "sandersdenardi@gmail.com"
+
+[[menu.main]]
+    url = "/about"
+    Name = "About"
+
+[[menu.main]]
+    url = "https://www.nerdshit.net/"
+    Name = "Projects"
