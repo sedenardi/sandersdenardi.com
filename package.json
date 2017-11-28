@@ -1,0 +1,25 @@
+{
+  "name": "sandersdenardi.com",
+  "version": "1.0.0",
+  "description": "Blog",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sedenardi/sandersdenardi.com.git"
+  },
+  "author": "Sanders DeNardi <sedenardi@gmail.com> (https://www.sandersdenardi.com/)",
+  "bugs": {
+    "url": "https://github.com/sedenardi/sandersdenardi.com/issues"
+  },
+  "homepage": "https://www.sandersdenardi.com",
+  "devDependencies": {
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-postcss": "^7.0.0",
+    "postcss-uncss": "^0.16.1",
+    "uncss": "^0.16.1"
+  }
+}
