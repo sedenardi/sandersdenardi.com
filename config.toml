@@ -20,12 +20,12 @@ paginate = 10
     highlight = "solarized_dark"
     hideHome = true
     googleAnalytics = "UA-43803722-1"
+    ogImageUrl = "twitter-card.jpg"
 
     # Sidebar social links
     github = "sedenardi"
     twitter = "srednass"
     email = "sandersdenardi@gmail.com"
-    twitterCardUrl = "twitter-card.jpg"
 
 [[menu.main]]
     url = "/about"
