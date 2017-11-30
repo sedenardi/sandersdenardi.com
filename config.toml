@@ -25,6 +25,7 @@ paginate = 10
     github = "sedenardi"
     twitter = "srednass"
     email = "sandersdenardi@gmail.com"
+    twitterCardUrl = "twitter-card.jpg"
 
 [[menu.main]]
     url = "/about"
