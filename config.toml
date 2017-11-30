@@ -21,9 +21,9 @@ paginate = 10
     hideHome = true
     googleAnalytics = "UA-43803722-1"
 
-    # Sidebar social links, these must be full URLs.
-    github = "https://github.com/sedenardi"
-    twitter = "https://twitter.com/srednass"
+    # Sidebar social links
+    github = "sedenardi"
+    twitter = "srednass"
     email = "sandersdenardi@gmail.com"
 
 [[menu.main]]
