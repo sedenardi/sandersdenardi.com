@@ -7,7 +7,6 @@ paginate = 10
 
 [author]
     name = "Sanders DeNardi"
-    linkHome = true
 
 [taxonomies]
     category = "categories"
@@ -32,5 +31,46 @@ paginate = 10
     Name = "About"
 
 [[menu.main]]
-    url = "https://www.nerdshit.net/"
     Name = "Projects"
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "Scaffmap"
+    url = "https://www.sprinkmap.com/scaff"
+    weight = 1
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "Vibe Vault"
+    url = "https://play.google.com/store/apps/details?id=com.code.vibevault"
+    weight = 2
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "Central Walk"
+    url = "https://www.sandersdenardi.com/projects/central-walk/"
+    weight = 3
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "SVUViz"
+    url = "https://svuviz.sandersdenardi.com/"
+    weight = 4
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "Festival Guide"
+    url = "https://www.sandersdenardi.com/projects/festival-guide/"
+    weight = 5
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "Score Tweets"
+    url = "https://github.com/sedenardi/score-tweets"
+    weight = 6
+
+[[menu.main]]
+    parent = "Projects"
+    Name = "All Projects"
+    url = "https://www.sandersdenardi.com/projects/"
+    weight = 7

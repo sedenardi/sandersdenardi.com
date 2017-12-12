@@ -12,7 +12,7 @@ tags:
 ---
 If you're using one of the modern client-side javascript frameworks, I'm sure you've heard of server-side rendering. That is, sending the initial markup fully-rendered on the initial page load. This lets the browser start rendering the HTML as the client javascript is being downloaded and executed. It also lets search engines crawl your site easier.
 
-Apps that use this technique often use the React framework and are served using a Node.js server, and are referred to as "universal" (or "isomorphic", though I think that term has fallen out of fashion). Universal as in the same React view components are rendered in javascript on both the client and the server.
+Apps that use this technique often use the React framework and are served using a Nodejs server, and are referred to as "universal" (or "isomorphic", though I think that term has fallen out of fashion). Universal as in the same React view components are rendered in javascript on both the client and the server.
 
 There are many different ways to go about building a universal React app, with many example projects easily searchable on GitHub and elsewhere. While most of these projects result in single-page applications, I'm going to show you how to build a multi-page universal app using a modern (at time of publication) web server (<a href="http://koajs.com/" target="_blank">koa 2</a>), build tooling (<a href="https://gulpjs.com/" target="_blank">gulp 4</a>, <a href="https://webpack.js.org/" target="_blank">webpack 3</a>, <a href="https://babeljs.io/" target="_blank">babel 6</a>), and build features (incremental builds, production-ready builds, etc.).
 
