@@ -21,7 +21,7 @@ gulp.task('hugo', () => {
 gulp.task('processHtml', () => {
   return gulp.src('public/**/*.html')
     .pipe(htmlreplace({
-      'js': 'https://www.sandersdenardi.com/css/site.css'
+      'js': '/css/site.css'
     }))
     .pipe(htmlmin({
       collapseWhitespace: true,
