@@ -71,6 +71,12 @@ paginate = 10
 
 [[menu.main]]
     parent = "Projects"
+    Name = "E-bike"
+    url = "https://www.sandersdenardi.com/ebike/"
+    weight = 7
+
+[[menu.main]]
+    parent = "Projects"
     Name = "All Projects"
     url = "https://www.sandersdenardi.com/projects/"
-    weight = 7
+    weight = 8
