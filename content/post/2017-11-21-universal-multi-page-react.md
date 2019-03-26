@@ -141,4 +141,4 @@ While most boilerplate projects are more fully-realized, this is purposefully de
 
 These features, while essential for building a functional, production-ready application, can be implemented several different ways, and outside styles, don't touch this project's files.
 
-All code can be found on <a href="https://github.com/sedenardi/koa-react-universal-multi-page" target="_blank">GitHub</a>. Feel free to as me any questions there, file any issues if something isn't clear, or submit a pull request.
+All code can be found on <a href="https://github.com/sedenardi/koa-react-universal-multi-page" target="_blank">GitHub</a>. Feel free to ass me any questions, file any issues if something isn't clear, or submit a pull request.
