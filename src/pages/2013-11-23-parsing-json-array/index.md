@@ -2,7 +2,7 @@
 title: Parsing JSON Array With Missing Elements
 date: 2013-11-23T17:57:10-05:00
 author: Sanders
-url: /parsing-json-array/
+slug: /parsing-json-array/
 tags:
   - javascript
   - json

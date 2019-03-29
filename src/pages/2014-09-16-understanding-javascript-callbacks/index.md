@@ -2,7 +2,7 @@
 title: Understanding Javascript Callbacks
 date: 2014-09-16T18:03:19-04:00
 author: Sanders
-url: /understanding-javascript-callbacks/
+slug: /understanding-javascript-callbacks/
 tags:
   - javascript
 ---

@@ -2,7 +2,7 @@
 title: Introducing Tweet Zone
 date: 2013-12-18T12:13:52-05:00
 author: Sanders
-url: /introducing-tweet-zone/
+slug: /introducing-tweet-zone/
 tags:
   - javascript
   - nodejs

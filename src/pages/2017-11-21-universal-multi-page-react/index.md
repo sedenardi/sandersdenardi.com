@@ -2,7 +2,7 @@
 title: Universal Multi-Page React App
 date: 2017-11-21T20:35:12-05:00
 author: Sanders
-url: /universal-multi-page-react/
+slug: /universal-multi-page-react/
 tags:
   - javascript
   - nodejs

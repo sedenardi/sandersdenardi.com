@@ -2,7 +2,7 @@
 title: Moving Files in Android
 date: 2013-10-10T13:49:20-04:00
 author: Sanders
-url: /moving-files-in-android/
+slug: /moving-files-in-android/
 tags:
   - android
 ---
