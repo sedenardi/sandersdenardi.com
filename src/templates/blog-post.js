@@ -7,38 +7,34 @@ import SEO from '../components/seo';
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
-    const siteTitle = this.props.data.site.siteMetadata.title;
     const { previous, next } = this.props.pageContext;
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout {...this.props.data.site.siteMetadata} location={this.props.location}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
-        <h1>{post.frontmatter.title}</h1>
-        <p>
+        <h1 className="tw-text-3xl tw-font-light">{post.frontmatter.title}</h1>
+        <div className="tw-mt-1 tw-text-grey-dark tw-font-light">
           {post.frontmatter.date}
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr />
-
-        <ul>
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
+        </div>
+        <div className="tw-mt-4 tw-text-lg tw-font-light tw-leading-normal"
+          dangerouslySetInnerHTML={{ __html: post.html }} />
+        <br />
+        <br />
+        {previous && (
+          <Link to={previous.fields.slug} rel="prev">
+            ← {previous.frontmatter.title}
+          </Link>
+        )}
+        <br />
+        <br />
+        {next && (
+          <Link className="tw-block tw-text-right" to={next.fields.slug} rel="next">
+            {next.frontmatter.title} →
+          </Link>
+        )}
       </Layout>
     );
   }

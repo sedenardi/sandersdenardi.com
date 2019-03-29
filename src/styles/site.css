@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 16px;
+}
+
 a {
   @apply .tw-no-underline;
 }
+
 a:hover {
   @apply .tw-underline;
 }
@@ -14,5 +19,18 @@ nav a {
 }
 
 main a {
-  @apply .tw-text-black;
+  @apply .tw-text-blue;
+}
+
+p {
+  @apply .tw-mb-4;
+}
+
+ul {
+  @apply .tw-pl-8;
+}
+
+h2, h4 {
+  @apply .tw-mt-8;
+  @apply .tw-mb-4;
 }

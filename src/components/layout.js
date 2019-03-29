@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'gatsby';
+import { Link } from 'gatsby';
 import githubIcon from '../assets/github-square.svg';
 import twitterIcon from '../assets/twitter-square.svg';
 import envelopeIcon from '../assets/envelope-square.svg';
@@ -67,9 +67,11 @@ class Nav extends React.Component {
   }
   render() {
     return (
-      <nav className="tw-bg-black tw-text-white tw-w-full lg:tw-fixed lg:tw-pin-l lg:tw-pin-y lg:tw-w-96 tw-p-8 tw-overflow-y-scroll tw-flex tw-flex-col-reverse">
-        <div>
-          <h1 className="tw-text-3xl lg:tw-text-4.5xl tw-font-thin tw-text-center lg:tw-text-left">{this.props.title}</h1>
+      <nav className="tw-bg-black tw-text-white tw-w-full lg:tw-fixed lg:tw-pin-l lg:tw-pin-y lg:tw-w-96 tw-overflow-y-scroll">
+        <div className="tw-p-8">
+          <h1 className="tw-text-3xl lg:tw-text-4.5xl tw-font-thin tw-text-center lg:tw-text-left">
+            <Link to="/">{this.props.title}</Link>
+          </h1>
           {this.projects()}
           {this.social()}
         </div>
@@ -83,7 +85,7 @@ export default class Layout extends React.Component {
     return (
       <div className="tw-flex tw-flex-col tw-min-h-screen tw-font-sans">
         <Nav {...this.props} />
-        <main className="lg:tw-ml-96">
+        <main className="lg:tw-ml-96 tw-p-4">
           {this.props.children}
         </main>
       </div>

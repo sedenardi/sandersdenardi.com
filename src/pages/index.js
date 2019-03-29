@@ -18,18 +18,17 @@ class BlogIndex extends React.Component {
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug;
           return (
-            <div key={node.fields.slug}>
-              <h3>
-                <Link style={{ boxShadow: 'none' }} to={node.fields.slug}>
+            <div key={node.fields.slug} className="tw-pt-4 tw-pb-8">
+              <h3 className="tw-text-3xl tw-font-light">
+                <Link className="tw-text-black" to={node.fields.slug}>
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
-              <p
+              <div className="tw-mt-1 tw-text-grey-dark tw-font-light">{node.frontmatter.date}</div>
+              <p className="tw-mt-2 tw-text-lg tw-font-light tw-leading-normal"
                 dangerouslySetInnerHTML={{
                   __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
+                }} />
             </div>
           );
         })}
