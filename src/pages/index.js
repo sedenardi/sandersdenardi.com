@@ -7,11 +7,10 @@ import SEO from '../components/seo';
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props;
-    const siteTitle = data.site.siteMetadata.title;
     const posts = data.allMarkdownRemark.edges;
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout {...data.site.siteMetadata} location={this.props.location}>
         <SEO
           title="All posts"
           keywords={['blog', 'gatsby', 'javascript', 'react']}
@@ -46,6 +45,15 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        projects {
+          name
+          url
+        }
+        social {
+          twitter
+          github
+          email
+        }
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -58,7 +66,6 @@ export const pageQuery = graphql`
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             title
-            description
           }
         }
       }

@@ -2,11 +2,22 @@ module.exports = {
   siteMetadata: {
     title: 'Sanders DeNardi',
     author: 'Sanders DeNardi',
-    description: 'Personal blog by Sanders DeNardi. .',
+    description: 'Personal blog by Sanders DeNardi.',
     siteUrl: 'https://www.sandersdenardi.com/',
     social: {
       twitter: 'srednass',
+      github: 'sedenardi',
+      email: 'sandersdenardi@gmail.com'
     },
+    projects: [
+      { name: 'Scaffmap', url: 'https://www.sprinkmap.com/scaff' },
+      { name: 'Central Walk', url: 'https://www.sandersdenardi.com/projects/central-walk/' },
+      { name: 'E-Bikes', url: 'https://www.sandersdenardi.com/ebike/' },
+      { name: 'SVUViz', url: 'https://svuviz.sandersdenardi.com/' },
+      { name: 'Festival Guide', url: 'https://www.sandersdenardi.com/projects/festival-guide/' },
+      { name: 'Score Tweets', url: 'https://github.com/sedenardi/score-tweets' },
+      { name: 'All Projects', url: 'https://www.sandersdenardi.com/projects/' }
+    ]
   },
   plugins: [
     {

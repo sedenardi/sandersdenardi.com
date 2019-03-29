@@ -51,7 +51,15 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        author
+        projects {
+          name
+          url
+        }
+        social {
+          twitter
+          github
+          email
+        }
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -61,7 +69,6 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
-        description
       }
     }
   }

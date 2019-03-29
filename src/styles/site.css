@@ -1,3 +1,18 @@
 @tailwind preflight;
 @tailwind components;
 @tailwind utilities;
+
+a {
+  @apply .tw-no-underline;
+}
+a:hover {
+  @apply .tw-underline;
+}
+
+nav a {
+  @apply .tw-text-white;
+}
+
+main a {
+  @apply .tw-text-black;
+}
