@@ -36,7 +36,7 @@ OR EntityID2 = 24434492;
 
 This is concise and clear, and the way most would write the query. It returns the desired results and is intuitive. However, it doesn't run quite as fast as we expect. Looking at the query plan we can see why:
 
-![](/img/2013-09-05-the-case-against-or/qp1.png)
+![](./qp1.png)
 
 Because we combined both query predicates, we're forced to do a <a href="http://technet.microsoft.com/en-us/library/bb326635(v=sql.105).aspx" target="_blank">Key Lookup</a> on the entire result set. This involves going back and looking up in the clustered index each row that satisfies our query.
 
@@ -50,7 +50,7 @@ SELECT * FROM Relationships
 WHERE EntityID2 = 24434492;
 {{< /highlight >}}
 
-![](/img/2013-09-05-the-case-against-or/qp2.png)
+![](./qp2.png)
 
 Splitting the query up allows us to avoid doing the Key Lookup on the entire result set, and just do it on the part that's necessary. Using <a href="http://msdn.microsoft.com/en-us/library/ms184361.aspx" target="_blank">STATISTICS IO</a> I can see that the second query does less than 10% of the reads as the first. While the first query is fewer lines of code, the second is not only more performant, but easier to debug as both cases can be run separately.
 

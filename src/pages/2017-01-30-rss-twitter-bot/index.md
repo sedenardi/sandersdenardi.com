@@ -13,7 +13,7 @@ tags:
 ---
 Twitter is a great way to keep abreast of breaking news stories. Reputable news outlets, such as the <a href="https://twitter.com/washingtonpost" target="_blank">The Washington Post</a> and the <a href="https://twitter.com/nytimes" target="_blank">The New York Times</a>, maintain Twitter feeds that tweet out their stories as they're published. Unfortunately, these feeds can contain a lot of noise in the form of duplicates and undesirable content:
 
-![](/img/2017-01-30-rss-twitter-bot/wpost-twitter.jpg)
+![](./wpost-twitter.jpg)
 
 While some may find value in stories like these, it's questionable whether they need to see them show up 4 times within 2 days.
 

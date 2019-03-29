@@ -16,11 +16,11 @@ The main challenge to making the map was associating an area code with a geograp
 
 After I joined the coordinates with the number of occurrences the area code had in the SnapchatDB, making the heatmap was a matter of tweaking the heatmap.js options. The main option to consider is "max", which controls the intensity at different counts. If I were to set it to the true max, the lower 20% of area codes or so wouldn't even be visible on the map. The value I chose (50000) is arbitrary and solely due to my preference.
 
-![](/img/2014-01-08-mapping-the-snapchat-data-leak/snapchat.png)
+![](./snapchat.png)
 
 The distribution of leaked phone numbers is pretty interesting. Lots of northeast (NYC, Boston, DC, Philly) and California (LA, SF). However, the map doesn't look so interesting when compared to a similar map of the population (using data from <a href="http://en.wikipedia.org/wiki/List_of_United_States_cities_by_population" target="_blank">Wikipedia</a>).
 
-![](/img/2014-01-08-mapping-the-snapchat-data-leak/uspop.png)
+![](./uspop.png)
 
 Both maps closely follow the same distribution, which makes sense. Because I chose arbitrary scales to represent the density in each location it's tough to do in-depth analysis by just looking at the maps, but the data from Snapchat is easily accessible for anyone to dig into.
 

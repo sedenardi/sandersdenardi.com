@@ -18,7 +18,7 @@ That guide is great in showing how to setup a singular conference call, and can 
 
 ## State Machine Design
 
-![](/img/2017-05-05-twilio-conference-system/conference-state.png)
+![](./conference-state.png)
 
 Conference systems, like many phone systems, can be represented as simple state machines. This one in particular has just a few steps:
 
