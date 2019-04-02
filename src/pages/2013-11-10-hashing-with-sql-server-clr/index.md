@@ -155,4 +155,4 @@ As with most things in SQL Server, hashing is a prime example of knowing your da
 
 **EDIT 3**: After several years, I realized that my CLR benchmarks have a significant flaw. I should be using a SqlBinary parameter instead of a SqlBytes parameter so the incoming data isn't buffered into a stream, reducing performance. I welcome pull requests to fix this issue.
 
-<a href="https://github.com/sedenardi/sql-hashing-clr" target="_blank">View this post's code on GitHub</a>.
+<a href="https://github.com/sedenardi/sql-hashing-clr">View this post's code on GitHub</a>.

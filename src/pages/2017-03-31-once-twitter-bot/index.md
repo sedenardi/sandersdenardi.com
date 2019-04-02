@@ -11,7 +11,7 @@ tags:
   - javascript
   - nodejs
 ---
-Shortly after creating the <a href="/rss-twitter-bot/" target="_blank">RSS twitter bot</a> to tweet out an unduplicated list of published items, I realized a few issues with the approach:
+Shortly after creating the <a href="/rss-twitter-bot/">RSS twitter bot</a> to tweet out an unduplicated list of published items, I realized a few issues with the approach:
 
 - RSS feeds aren't available for all publications
 - RSS feeds are hyper-specific, which can lead to blind spots if not all feeds are considered

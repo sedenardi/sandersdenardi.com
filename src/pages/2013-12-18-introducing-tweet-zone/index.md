@@ -22,7 +22,7 @@ About a month ago a <a href="http://capitals.nhl.com/" target="_blank">Washingto
 
 Good question. Having worked with Twitter's API, I knew that this would be fairly easy to accomplish if only I had a source for the score information. I searched around and found that real-time sports services are pretty expensive, affordable mostly only to big news outlets.
 
-Looking around at different sports sites, I noticed that the leagues' (NHL, NFL) sites themselves seem to update their scores without me having to refresh the page. This told me that they were sending their scores outside of the main page information, and possibly in a format I could work with. Turns out that they both send relatively clean (one issue discussed in a <a title="Parsing JSON Array With Missing Elements" href="/parsing-json-array/" target="_blank">previous</a> post) JSON, so now I had a data source.
+Looking around at different sports sites, I noticed that the leagues' (NHL, NFL) sites themselves seem to update their scores without me having to refresh the page. This told me that they were sending their scores outside of the main page information, and possibly in a format I could work with. Turns out that they both send relatively clean (one issue discussed in a <a title="Parsing JSON Array With Missing Elements" href="/parsing-json-array/">previous</a> post) JSON, so now I had a data source.
 
 Using <a href="http://nodejs.org/" target="_blank">node.js</a>, I built a system that checks scores, detects changes, builds tweets, and sends them out automatically. Each league is its own component, and the code is written so that it'll be easy to add in other leagues (something I plan on doing once baseball starts up).
 
