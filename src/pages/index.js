@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import PostItem from '../components/post-item';
 
 const BlogIndex = function(props) {
   const { data } = props;
@@ -15,20 +16,8 @@ const BlogIndex = function(props) {
         keywords={['blog', 'gatsby', 'javascript', 'react']}
       />
       {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug;
         return (
-          <div key={node.fields.slug} className="tw-pt-4 tw-pb-8">
-            <h3 className="tw-text-3xl tw-font-light">
-              <Link className="tw-text-black" to={node.fields.slug}>
-                {title}
-              </Link>
-            </h3>
-            <div className="tw-mt-1 tw-text-grey-dark tw-font-light">{node.frontmatter.date}</div>
-            <p className="tw-mt-2 tw-text-lg tw-font-light tw-leading-normal"
-              dangerouslySetInnerHTML={{
-                __html: node.frontmatter.description || node.excerpt,
-              }} />
-          </div>
+          <PostItem key={node.frontmatter.slug} index post={node} />
         );
       })}
     </Layout>
@@ -56,13 +45,11 @@ export const pageQuery = graphql`
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
+          excerpt(pruneLength: 160)
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             title
+            slug
           }
         }
       }

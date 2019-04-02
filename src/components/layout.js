@@ -57,7 +57,7 @@ const Projects = function(props) {
   }
   return (
     <div className="tw-text-center lg:tw-text-left tw-text-2xl tw-font-thin tw-pt-4 lg:tw-pt-8">
-      <a className="tw-cursor-pointer lg:tw-cursor-default tw-pt-4" onClick={() => setExpanded(!expanded)}>
+      <a className="tw-cursor-pointer lg:tw-cursor-default tw-pt-4 tw-no-underline hover:tw-no-underline active:tw-no-underline" onClick={() => setExpanded(!expanded)}>
         <span className="tw-hidden lg:tw-inline">Projects</span>
         <span className="lg:tw-hidden">Projects {expanded ? '▲' : '▼'}</span>
       </a>
@@ -92,7 +92,7 @@ const Layout = function(props) {
   return (
     <div className="tw-flex tw-flex-col tw-min-h-screen tw-font-sans">
       <Nav {...props} />
-      <main className="lg:tw-ml-96 tw-p-4">
+      <main className="lg:tw-ml-96 tw-p-4 lg:tw-px-16 lg:tw-py-8">
         {props.children}
       </main>
     </div>
