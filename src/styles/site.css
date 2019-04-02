@@ -4,6 +4,8 @@
 
 html {
   font-size: 16px;
+  -webkit-box-direction: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
