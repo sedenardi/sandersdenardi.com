@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "settings": {
     "react": {
@@ -57,6 +58,8 @@
     "react/jsx-uses-vars": ["warn"],
     "react/no-string-refs": ["warn"],
     "react/no-unknown-property": ["warn"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "semi": ["error", "always"],
     "space-before-blocks": ["warn"],
     "space-in-parens": ["warn"],
