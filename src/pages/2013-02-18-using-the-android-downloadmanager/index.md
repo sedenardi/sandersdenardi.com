@@ -2,7 +2,7 @@
 title: Using The Android DownloadManager
 date: 2013-02-18T17:31:08-05:00
 author: Sanders
-slug: /using-the-android-downloadmanager/
+slug: using-the-android-downloadmanager/
 tags:
   - android
 ---

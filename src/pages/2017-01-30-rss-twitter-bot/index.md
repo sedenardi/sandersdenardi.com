@@ -2,7 +2,7 @@
 title: Building an RSS Twitter Bot
 date: 2017-01-30T20:18:05-05:00
 author: Sanders
-slug: /rss-twitter-bot/
+slug: rss-twitter-bot/
 tags:
   - aws
   - lambda

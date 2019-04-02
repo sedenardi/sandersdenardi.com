@@ -2,7 +2,7 @@
 title: Attaching Lasers To A Syma S107G RC Helicopter
 date: 2013-01-16T01:18:45-05:00
 author: Sanders
-slug: /laser-helicopter/
+slug: laser-helicopter/
 tags:
   - helicopter
   - lasers

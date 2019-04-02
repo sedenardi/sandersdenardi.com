@@ -2,7 +2,7 @@
 title: Moving a File In The Android MediaStore
 date: 2013-09-25T17:54:10-04:00
 author: Sanders
-slug: /moving-a-file-in-the-android-mediastore/
+slug: moving-a-file-in-the-android-mediastore/
 tags:
   - android
 ---

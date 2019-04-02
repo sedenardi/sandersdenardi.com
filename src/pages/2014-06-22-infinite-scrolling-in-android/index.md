@@ -2,7 +2,7 @@
 title: Infinite Scrolling in Android
 date: 2014-06-22T18:17:46-04:00
 author: Sanders
-slug: /infinite-scrolling-in-android/
+slug: infinite-scrolling-in-android/
 tags:
   - android
 ---

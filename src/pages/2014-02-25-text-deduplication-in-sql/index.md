@@ -2,7 +2,7 @@
 title: Text Deduplication in SQL
 date: 2014-02-25T12:25:24-05:00
 author: Sanders
-slug: /text-deduplication-in-sql/
+slug: text-deduplication-in-sql/
 tags:
   - festival-guide
   - mysql

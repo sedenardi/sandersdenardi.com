@@ -2,7 +2,7 @@
 title: Data Join Techniques in JavaScript
 date: 2014-04-25T02:03:09-04:00
 author: Sanders
-slug: /data-join-in-javascript/
+slug: data-join-in-javascript/
 tags:
   - data-visualization
   - festival-guide
