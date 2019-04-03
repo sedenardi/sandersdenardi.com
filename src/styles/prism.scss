@@ -43,7 +43,10 @@ code[class*="language-"] ::selection {
 }
 
 :not(pre) > code[class*="language-"] {
-  padding: 0.1em;
+  background: rgb(51, 66, 76);
+  @apply .tw-text-grey-light;
+  padding: .25rem .25rem;
+  white-space: normal;
 }
 
 .token.comment,
@@ -158,13 +161,6 @@ pre > code.highlight {
 .gatsby-highlight-code-line {
   display: block;
   background-color: rgb(51, 66, 76);
-}
-
-:not(pre) > code[class*='language-'] {
-  background: rgb(51, 66, 76);
-  @apply .tw-text-grey-light;
-  padding: .25rem .25rem;
-  white-space: normal;
 }
 
 .gatsby-highlight {

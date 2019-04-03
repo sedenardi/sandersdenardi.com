@@ -9,7 +9,7 @@ const NotFoundPage = function(props) {
   const siteTitle = data.site.siteMetadata.title;
 
   return (
-    <Layout location={props.location} title={siteTitle}>
+    <Layout {...props.data.site.siteMetadata} location={props.location} title={siteTitle}>
       <SEO title="404: Not Found" />
       <h1>Not Found</h1>
       <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
@@ -24,6 +24,15 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        projects {
+          name
+          url
+        }
+        social {
+          twitter
+          github
+          email
+        }
       }
     }
   }
