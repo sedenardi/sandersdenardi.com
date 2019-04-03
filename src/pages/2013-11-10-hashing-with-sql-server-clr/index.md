@@ -11,7 +11,7 @@ I have been looking at using hashes in a computed column to determine equality a
 
 Looking at C#'s built-in hashing capabilities (supported through <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography%28v=vs.110%29.aspx" target="_blank">System.Security.Cryptography</a>), I see the algorithms supported by both HASHBYTES and C# are MD5, SHA1, SHA256, and SHA512. Since I have no preference over which hashing algorithm to use (the probability of collision is low enough for each, and I am not concerned with security), I'm going to benchmark each and pick the fastest one. Instead of writing a separate function for each algorithm, I can use a simple switch statement to pick between them.
 
-{{< highlight csharp >}}
+```csharp
 [SqlFunction(IsDeterministic = true)]
 public static SqlBinary GetHash(SqlString algorithm, SqlBytes src)
 {
@@ -33,52 +33,52 @@ public static SqlBinary GetHash(SqlString algorithm, SqlBytes src)
         "Unrecognized hashtype: " + algorithm.Value);
   }
 }
-{{< /highlight >}}
+```
 
 This function matches the syntax of SQL Server's HASHBYTES, in that the first parameter is a string name of the algorithm, and the second is the value to be hashed. The key difference between the two is the type of the second parameter. HASHBYTES takes in a VARCHAR, NVARCHAR, or VARBINARY. One important thing to note is that a particular string stored as a VARCHAR will have a different hash than if the string were stored as a NVARCHAR. You can verify this by simply running the following:
 
-{{< highlight sql >}}
+```sql
 SELECT HASHBYTES('MD5',CONVERT(VARCHAR(8000),'test'))
 --0x098F6BCD4621D373CADE4E832627B4F6
 SELECT HASHBYTES('MD5',CONVERT(NVARCHAR(4000),'test'))
 --0xC8059E2EC7419F590E79D7F1B774BFE6
-{{< /highlight >}}
+```
 
 As your can see, the two have distinctly different hashes. The binary representations of both types also hash to the same value of their respective type:
 
-{{< highlight sql >}}
+```sql
 SELECT HASHBYTES('MD5',CONVERT(VARBINARY(8000),'test'))
 --0x098F6BCD4621D373CADE4E832627B4F6
 SELECT HASHBYTES('MD5',CONVERT(VARBINARY(8000),N'test'))
 --0xC8059E2EC7419F590E79D7F1B774BFE6
-{{< /highlight >}}
+```
 
 To verify that our function behaves the same (our implementation should not behave any differently than the built in function), we can run the following:
 
-{{< highlight sql >}}
+```sql
 SELECT dbo.GetHash('MD5',CONVERT(VARBINARY(8000),'test'))
 --0x098F6BCD4621D373CADE4E832627B4F6
 SELECT dbo.GetHash('MD5',CONVERT(VARBINARY(8000),N'test'))
 --0xC8059E2EC7419F590E79D7F1B774BFE6
-{{< /highlight >}}
+```
 
 To verify our function accomplishes what we created it for in the first place, we need to come up with an input that exceeds HASHBYTES's 8000 byte limit. I'll create an input of 10,000 bytes by using SQL Server's <a href="http://technet.microsoft.com/en-us/library/ms174383.aspx" target="_blank">REPLICATE</a>  function. I'll pick a simple string, "test1", and replicate it 2000 times to create an input of 10,000 bytes.
 
-{{< highlight sql >}}
+```sql
 DECLARE @INPUT VARCHAR(MAX);
 SELECT @INPUT = REPLICATE(CAST('test1' AS VARCHAR(MAX)),2000);
 SELECT HASHBYTES('MD5',@INPUT);
 --Error: String or binary data would be truncated.
 SELECT dbo.GetHash('MD5',CONVERT(VARBINARY(MAX),@INPUT));
 --0xB08D483188CC4526FBE981349B3C1744
-{{< /highlight >}}
+```
 
 The REPLICATE function requires we cast our test string as a VARCHAR(MAX) in order for it to output beyond 8000 bytes. It's a bit annoying how these 8000 bytes limitations keep popping up.
 
 Now that we know our function works, we can go about testing its performance. We can't test HASHBYTES and our CLR function with inputs over 8000 bytes, so to benchmark between the two we'll create a table with test values that vary uniformly in length. Since I'm a fan of using random values rather than a static "test1&#8243; string, I'm going to use SQL Server's <a href="http://technet.microsoft.com/en-us/library/ms190348.aspx" target="_blank">NEWID</a> function to generate a 36 character long string and replicate it to the desired length. The code for doing this can be found in <a href="https://github.com/sedenardi/sql-hashing-clr" target="_blank">my GitHub repository</a> so I won't go into detail about it here, but essentially I create a table with 90000 randomly generated values of different lengths and using 2 WHILE loops run each function over the values several times. To measure the performance, I record the CPU usage from <a href="http://technet.microsoft.com/en-us/library/ms177648.aspx" target="_blank">sys.dm_exec_requests</a> before and after I run the function.
 
 | ALGORITHM    | CPUAVERAGE | CPUMEDIAN | CPUSTD_DEV |
-| :----------- | :--------- | :-------- | :--------- |
+| ------------ | ---------- | --------- | ---------- |
 | SQL_MD5      | 1729       | 1576      | 488        |
 | SQL_SHA1     | 1783       | 1638      | 369        |
 | SQL_SHA2_512 | 2912       | 2808      | 618        |
@@ -92,7 +92,7 @@ As you can see, there's a pretty big performance drop moving from HASHBYTES to a
 
 One optimization we can do is to use the CLR only when needed. Suppose we create a new function that checks the length of the input and decides whether to use HASHBYTES or the CLR.
 
-{{< highlight sql >}}
+```sql
 CREATE FUNCTION dbo.GetHashHybrid(@algorithm NVARCHAR(4000)
   ,@INPUT VARBINARY(MAX))
 RETURNS VARBINARY(8000) WITH SCHEMABINDING
@@ -107,12 +107,12 @@ RETURN (
     END
 )
 END
-{{< /highlight >}}
+```
 
 This new function is a drop-in replacement of our GetHash function, taking the same parameters and types. Running the same sub-8000 benchmark including the hybrid and the built-in fn\_repl\_hash_binary functions:
 
 | ALGORITHM       | CPUAVERAGE | CPUMEDIAN | CPUSTD_DEV |
-| :-------------- | :--------- | :-------- | :--------- |
+| --------------- | ---------- | --------- | ---------- |
 | SQL_MD5         | 2131       | 1885      | 676        |
 | SQL_SHA1        | 2296       | 2217      | 691        |
 | SQL_SHA2_512    | 3910       | 3819      | 1140       |
@@ -132,7 +132,7 @@ We see a pretty significant performance boost over the CLR function. Even though
 To test cases for which we created the function in the first place, we'll run the same test as before and make our test values half under 8000 bytes long and half over, so we can guarantee HASHBYTES is being hit as well. This benchmarking script is contained in the same GitHub repository as the previous one.
 
 | ALGORITHM       | CPUAVERAGE | CPUMEDIAN | CPUSTD_DEV |
-| :-------------- | :--------- | :-------- | :--------- |
+| --------------- | ---------- | --------- | ---------- |
 | CLR_SHA1        | 10740      | 9809      | 1974       |
 | CLR_MD5         | 11209      | 10353     | 2413       |
 | Repl_MD5        | 11503      | 11626     | 2415       |

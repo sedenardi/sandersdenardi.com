@@ -29,7 +29,8 @@ I'm not meaning for this to be a detailed explainer of how universal apps work i
 
 #### Build
 - Create the client bootstrap javascript that attaches React to the markup
-{{< highlight javascript >}}
+
+```jsx
 import React from 'react';
 import { hydrate } from 'react-dom';
 import Component from './path/to/view.jsx';
@@ -38,7 +39,8 @@ const container = document.getElementById('page');
 const props = JSON.parse(document.getElementById('props').innerHTML);
 const element = React.createElement(Component, props);
 hydrate(element, container);
-{{< /highlight >}}
+```
+
 - Build the file using Webpack or similar to transpile the JSX & ES6 code
 - Optionally create a vendor file for libraries that won't change every build
 
@@ -46,7 +48,8 @@ hydrate(element, container);
 - Receives request in router
 - Declares the view element (this can be done outside of router)
 - Render the view to HTML using <a href="https://reactjs.org/docs/react-dom-server.html#rendertostring" target="_blank">ReactDOMServer</a> (with your props)
-{{< highlight javascript >}}
+
+```js
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Component = require('./path/to/view.jsx');
@@ -58,7 +61,8 @@ router.get('/', async (ctx) => {
   const rendered = ReactDOMServer.renderToString(element);
   ctx.body = template({ body: rendered });
 });
-{{< /highlight >}}
+```
+
 - Inject that rendered HTML and serialized props into a template that loads the prebuilt page component
 - Send the complete page to the client
 
@@ -72,7 +76,8 @@ Our multi-page app follows the same structure, but generalizes each step by para
 
 #### Build
 - Instead of building one single bootstrap file, we create one for each page (here I'm using <a href="https://lodash.com/docs/4.17.4#template" target="_blank">lodash template</a> to inject the page information)
-{{< highlight javascript >}}
+
+```js
 import React from 'react';
 import { hydrate } from 'react-dom';
 import <%= moduleName %> from '<%= modulePath %>';
@@ -81,13 +86,15 @@ const container = document.getElementById('page');
 const props = JSON.parse(document.getElementById('props').innerHTML);
 const element = React.createElement(<%= moduleName %>, props);
 hydrate(element, container);
-{{< /highlight >}}
+```
+
 - Create a Webpack file with <a href="https://webpack.js.org/concepts/entry-points/#multi-page-application" target="_blank">multiple entry points</a> so that multiple files are generated
 - For production environments, add a separate `vendor` entry and uglify the output javascript files
 
 #### Server
 - Search project for `*Page.jsx` files and declare them by key
-{{< highlight javascript >}}
+
+```js
 const globPattern = path.join(viewsDir, '/**/*Page.jsx');
 const pageFiles = glob.sync(globPattern);
 const pages = _.reduce(pageFiles, (result, fileName) => {
@@ -95,16 +102,20 @@ const pages = _.reduce(pageFiles, (result, fileName) => {
   result[key] = require(fileName).default;
   return result;
 }, {});
-{{< /highlight >}}
+```
+
 - In the route handler, declare the route you want to use and eventually render
-{{< highlight javascript >}}
+
+```js
 router.get('/', async (ctx) => {
   ctx.state.view = 'IndexPage';
   ctx.state.props = props;
 });
-{{< /highlight >}}
+```
+
 - Render markup & props in a downstream middleware handler
-{{< highlight javascript >}}
+
+```js
 if (pages[ctx.state.view]) {
   const element = React.createElement(pages[ctx.state.view], ctx.state.props);
   const rendered = ReactDOMServer.renderToString(element);
@@ -115,7 +126,7 @@ if (pages[ctx.state.view]) {
 } else {
   throw new Error(`Missing view: ${ctx.state.view}`);
 }
-{{< /highlight >}}
+```
 
 While this example uses `koa` as the http framework, most frameworks allow you to run such code in the route processing chain (middleware), so this can be easily ported to `express` or `hapi`.
 

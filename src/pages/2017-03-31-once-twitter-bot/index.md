@@ -30,7 +30,7 @@ To fix this issue, we can take the shortened link and resolve it by using the <a
 
 The popular <a href="https://github.com/request/request" target="_blank">request</a> module has an easy way to perform this resolution:
 
-{{< highlight javascript >}}
+```js
 request({
   method: 'HEAD',
   url: 'shortened url',
@@ -38,7 +38,7 @@ request({
 }, (err, res) => {
   const resolvedUrl = res.request.href;
 });
-{{< /highlight >}}
+```
 
 After that, we can determine whether the incoming tweet contains a link that's been retweeted before, and use the Twitter API to retweet it if not.
 
