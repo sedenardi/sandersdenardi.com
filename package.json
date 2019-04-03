@@ -22,6 +22,7 @@
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-purgecss": "^3.1.1",
     "gatsby-plugin-react-helmet": "^3.0.11",
+    "gatsby-plugin-s3": "^0.2.5",
     "gatsby-plugin-sass": "^2.0.11",
     "gatsby-plugin-sharp": "^2.0.31",
     "gatsby-plugin-sitemap": "^2.0.11",
@@ -53,6 +54,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "deploy": "gatsby-plugin-s3 deploy --yes && aws cloudfront create-invalidation --distribution-id E2OHTXM3R42D6Q --paths \"/*\"",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",

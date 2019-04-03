@@ -1,10 +1,12 @@
+const siteAddress = new URL('https://www.sandersdenardi.com');
+
 module.exports = {
   siteMetadata: {
     title: 'Sanders DeNardi',
     author: 'Sanders DeNardi',
     description: 'Personal blog by Sanders DeNardi.',
-    siteUrl: 'https://www.sandersdenardi.com/',
-    siteImage: 'https://www.sandersdenardi.com/twitter-card.jpg',
+    siteUrl: siteAddress.origin,
+    siteImage: `${siteAddress.origin}/twitter-card.jpg`,
     social: {
       twitter: 'srednass',
       github: 'sedenardi',
@@ -105,6 +107,14 @@ module.exports = {
       }
     },
     'gatsby-plugin-catch-links',
-    'gatsby-plugin-sitemap'
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-s3',
+      options: {
+        bucketName: 'sandersdenardi.com',
+        protocol: siteAddress.protocol.slice(0, -1),
+        hostname: siteAddress.hostname
+      },
+    }
   ],
 };
