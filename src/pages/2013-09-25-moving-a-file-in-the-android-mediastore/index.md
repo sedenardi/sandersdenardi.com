@@ -8,14 +8,14 @@ tags:
 ---
 When you move or copy a media file in Android, any app that access it via the <a href="http://developer.android.com/reference/android/provider/MediaStore.html" target="_blank">MediaStore</a> will not automatically be updated. In one of my <a title="Querying And Removing Media From The Android MediaStore" href="/querying-and-removing-media-from-android-mediastore/">previous articles</a> I talked about querying and manipulating Android's MediaStore, and the cost of doing a full scan of the file system to check for changes. Luckily, there's an easier way to update the file's location: use ContentResolver's <a href="http://developer.android.com/reference/android/content/ContentResolver.html#update%28android.net.Uri,%20android.content.ContentValues,%20java.lang.String,%20java.lang.String[]%29" target="_blank">update()</a> method.
 
-{{< highlight java >}}
+```java
 ContentValues values = new ContentValues();
 values.put(MediaStore.MediaColumns.DATA, newPath);
 int rows = context.getContentResolver().update(
   MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values,
   MediaStore.MediaColumns.DATA + "='" + oldPath + "'", null
 );
-{{< /highlight >}}
+```
 
 In this example I'm moving an audio file. Because the path to the actual file is stored in the MediaStore.MediaColumns.DATA column, I want to query on it and change it. The update() method uses <a href="http://developer.android.com/reference/android/content/ContentValues.html" target="_blank">ContentValues</a> to make changes to the MediaStore, and since I only want to update the DATA column, I put the new file path with the appropriate key. Here I'm just concatenating string to build my selection parameter, so the last parameter is left null. The function returns an integer of the rows that were affected, and can be used to verify that you're querying and updating the correct row.
 

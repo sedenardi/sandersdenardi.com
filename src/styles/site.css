@@ -36,3 +36,5 @@ h2, h4 {
   @apply .tw-mt-8;
   @apply .tw-mb-4;
 }
+
+@import 'prism.css';

@@ -16,7 +16,7 @@ The code I'm using here can all be found <a href="https://github.com/sedenardi/n
 
 <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable" target="_blank">Readable</a> streams are sources of data that are waiting to be read. An analogy I've read several places is to think of a readable stream as a faucet, which is actually a pretty great analogy. The stream has an underlying source of data (the water) that's waiting to be read (waiting for valve to open and release water).
 
-{{< highlight javascript >}}
+```js
 var data = require('../data-sources/sourceData.json'),
     Readable = require('stream').Readable,
     util = require('util');
@@ -27,11 +27,11 @@ var ReadStream = function() {
   this.curIndex = 0;
 };
 util.inherits(ReadStream, Readable);
-{{< /highlight >}}
+```
 
 To create our own readable stream, we can use Node's built-in `util.inherits()` to subclass a readable stream. This copies the prototype methods from one constructor into our new object. Notice that we're calling the readable object's constructor with the option `objectMode: true`. You'll see this in all of our streams. <a href="http://nodejs.org/api/stream.html#stream_object_mode" target="_blank">Object Mode</a> means that we're operating on objects instead of string and buffers, which is convenient for our trivial example.
 
-{{< highlight javascript >}}
+```js
 ReadStream.prototype._read = function() {
   if (this.curIndex === this.data.length)
     return this.push(null);
@@ -41,7 +41,7 @@ ReadStream.prototype._read = function() {
   this.push(data);
 };
 module.exports = ReadStream;
-{{< /highlight >}}
+```
 
 The <a href="http://nodejs.org/api/stream.html#stream_readable_read_size_1" target="_blank"><code>_read()</code></a> function is the heart of our readable stream. This determines what data is put into the read queue by calling push() and passing in the data to be delivered to the stream consumer. Going back to our faucet analogy, this function tells the readable stream (the faucet) what data (the water) is to be delivered when the stream is consumed (valve is opened).
 
@@ -55,7 +55,7 @@ Readable streams can be consumed directly by attaching either a `data` or `reada
 
 In non-flowing mode, the stream pushes some of it's data to the read queue and then emits its `readable` event.
 
-{{< highlight javascript >}}
+```js
 var ReadStream = require('./lib/readStream.js');
 var stream = new ReadStream();
 stream.on('readable', function() {
@@ -66,12 +66,12 @@ stream.on('readable', function() {
 stream.on('end', function() {
   console.log('done');
 });
-{{< /highlight >}}
+```
 
 When we receive the `readable` event, we know our stream has data in it's buffer that's available to be read, and start consuming the data by calling `read()` on the stream.
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 received         : {"id":0,"name":"object 0","value":2}
 read             : {"id":2,"name":"object 2","value":4}
@@ -81,8 +81,8 @@ received         : {"id":2,"name":"object 2","value":4}
 read             : {"id":4,"name":"object 4","value":2}
 received         : {"id":3,"name":"object 3","value":0}
 received         : {"id":4,"name":"object 4","value":2}
-done</pre>
-</div>
+done
+```
 
 We can get a better sense of what's going on from following the output. The stream pushes two objects to the read queue and then fires the `readable` event. Once the consumer starts reading objects, it frees up room in the read queue for our stream to continue pushing objects to. When the stream is done, and the read queue is empty, the `end` event is emitted.
 
@@ -90,7 +90,7 @@ We can get a better sense of what's going on from following the output. The stre
 
 In flowing mode data is read from the readable stream unprompted and immediately provided to the consumer. This means that the consumer doesn't have to ask for the data, it's just fed the stream's data until the stream ends.
 
-{{< highlight javascript >}}
+```js
 var ReadStream = require('./lib/readStream.js');
 var stream = new ReadStream();
 stream.on('data', function(record) {
@@ -99,10 +99,10 @@ stream.on('data', function(record) {
 stream.on('end', function() {
   console.log('done');
 });
-{{< /highlight >}}
+```
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 received         : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 received         : {"id":1,"name":"object 1","value":0}
@@ -112,8 +112,8 @@ read             : {"id":3,"name":"object 3","value":0}
 received         : {"id":3,"name":"object 3","value":0}
 read             : {"id":4,"name":"object 4","value":2}
 received         : {"id":4,"name":"object 4","value":2}
-done</pre>
-</div>
+done
+```
 
 You can see that the consumer has access to the record immediately via the callback function's parameter (named `record` here).
 
@@ -121,7 +121,7 @@ You can see that the consumer has access to the record immediately via the callb
 
 One advantage of using flowing mode is that you can pause and resume streams. This is useful when you're consuming the stream in some time-consuming fashion (such as writing to a database). Calling the aptly-named `pause()` and `resume()` functions on the stream accomplishes this.
 
-{{< highlight javascript >}}
+```js
 stream.on('data', function(record) {
   console.log('received: ' + JSON.stringify(record));
   console.log('pausing stream for 2 seconds');
@@ -131,12 +131,12 @@ stream.on('data', function(record) {
     stream.resume();
   },2000);
 });
-{{< /highlight >}}
+```
 
 This example uses a `setTimeout()` function to simulate something that may take some time (in this case 2 seconds).
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 received         : {"id":0,"name":"object 0","value":2}
 pausing stream for 2 seconds
 read             : {"id":1,"name":"object 1","value":0}
@@ -156,8 +156,8 @@ resuming stream
 received         : {"id":4,"name":"object 4","value":2}
 pausing stream for 2 seconds
 done
-resuming stream</pre>
-</div>
+resuming stream
+```
 
 Once the the `pause()` function is called our consumer does not receive another `data` event until the `resume()` event is called. Notice that the stream is still pushing data to the read queue, even while our stream is paused.
 
@@ -165,7 +165,7 @@ Once the the `pause()` function is called our consumer does not receive another 
 
 <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable" target="_blank">Writable</a> streams are destinations of data. Using our faucet analogy again we can think of writable streams as a drain.
 
-{{< highlight javascript >}}
+```js
 var Writable = require('stream').Writable,
     util = require('util');
 
@@ -179,7 +179,7 @@ WriteStream.prototype._write = function(chunk, encoding, callback) {
   callback();
 };
 module.exports = WriteStream;
-{{< /highlight >}}
+```
 
 Creating our writable stream class is similar to how we created our readable stream before, subclassing the writable stream and setting the object mode to true. The <a href="http://nodejs.org/api/stream.html#stream_writable_write_chunk_encoding_callback_1" target="_blank"><code>_write()</code></a> function is where we tell the stream to direct the data. In this example, we're taking the incoming data `chunk` and writing it to the console. Once you're done with the particular piece of data you call `callback()`. This tells the source of data that the write stream is done with the current piece of data and is ready for the next.
 
@@ -187,17 +187,17 @@ Creating our writable stream class is similar to how we created our readable str
 
 We can test our new WriteStream by piping our ReadStream to it. The built-in function <a href="http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options" target="_blank"><code>pipe()</code></a> attaches a readable stream to a writable stream, passing the data from one to the other.
 
-{{< highlight javascript >}}
+```js
 var ReadStream = require('./lib/readStream.js'),
     WriteStream = require('./lib/writeStream.js');
 
 var rs = new ReadStream();
 var ws = new WriteStream();
 rs.pipe(ws);
-{{< /highlight >}}
+```
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 write            : {"id":0,"name":"object 0","value":2}
 read             : {"id":2,"name":"object 2","value":4}
@@ -206,14 +206,14 @@ read             : {"id":3,"name":"object 3","value":0}
 write            : {"id":2,"name":"object 2","value":4}
 read             : {"id":4,"name":"object 4","value":2}
 write            : {"id":3,"name":"object 3","value":0}
-write            : {"id":4,"name":"object 4","value":2}</pre>
-</div>
+write            : {"id":4,"name":"object 4","value":2}
+```
 
 You can see that our source data automatically flows to our output without us having to listen on any events. `pipe()` manages the flow of data between streams with no intervention.
 
 Say our writable stream takes a bit of time to handle the incoming data (again, such as writing to a database). We can simulate this by modifying WriteStream's `_write()` function and adding a delay using `setTimeout()`.
 
-{{< highlight javascript >}}
+```js
 WriteStream.prototype._write = function(chunk, encoding, callback) {
   console.log('write: ' + JSON.stringify(chunk));
   console.log('waiting 2 seconds');
@@ -222,12 +222,12 @@ WriteStream.prototype._write = function(chunk, encoding, callback) {
     callback();
   },2000);
 };
-{{< /highlight >}}
+```
 
 Piping ReadStream into our new WriteStream gives the following output.
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 write            : {"id":0,"name":"object 0","value":2}
 waiting 2 seconds
@@ -246,8 +246,8 @@ waiting 2 seconds
 finished waiting
 write            : {"id":4,"name":"object 4","value":2}
 waiting 2 seconds
-finished waiting</pre>
-</div>
+finished waiting
+```
 
 As we can see, WriteStream doesn't get any new data until after `callback()` is called. `pipe()` handles all flow control so that the destination isn't overwhelmed by the readable stream.
 
@@ -255,7 +255,7 @@ As we can see, WriteStream doesn't get any new data until after `callback()` is 
 
 <a href="http://nodejs.org/api/stream.html#stream_class_stream_transform_1" target="_blank">Transform</a> streams are intermediaries of readable and writable streams. In fact, they are both readable and writable themselves. Data goes into the transform stream and can be returned modified or unchanged, or not even returned at all. To illustrate these points we'll go through some examples.
 
-{{< highlight javascript >}}
+```js
 var Transform = require('stream').Transform,
     util = require('util');
 
@@ -277,13 +277,13 @@ TransformStream.prototype._transform = function(chunk, encoding, callback) {
 };
 
 module.exports = TransformStream;
-{{< /highlight >}}
+```
 
 We'll create our transform stream like we have with our two previous streams, subclassing Transform and setting `objectMode: true`. The method that determines what the stream does is <a href="http://nodejs.org/api/stream.html#stream_transform_transform_chunk_encoding_callback" target="_blank"><code>_transform()</code></a>. Data comes in as the `chunk` parameter (like our writable stream) and is outputted using `push()` (like our readable stream). We signal that we're done with `chunk` by calling `callback()` (like our writable stream).
 
 This example transform stream copies the `value` of our object to a new field called `originalValue` and then increments `value`. To see it working, we can insert it in our pipe chain from earlier.
 
-{{< highlight javascript >}}
+```js
 var ReadStream = require('./lib/readStream.js'),
     WriteStream = require('./lib/writeStream.js'),
     TransformStream = require('./lib/transformStream.js');
@@ -293,12 +293,12 @@ var ws = new WriteStream();
 var ts = new TransformStream();
 
 rs.pipe(ts).pipe(ws);
-{{< /highlight >}}
+```
 
 One important thing I forgot to mention about `pipe()` is that it returns the destination stream. When we pipe our readable stream `rs` into our transform stream `ts` by doing `rs.pipe(ts)` it returns the transform stream, which is a readable and writable stream. We can then pipe it into `ws`, creating a full pipe chain.
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 transform before : {"id":0,"name":"object 0","value":2}
 transform after  : {"id":0,"name":"object 0","value":3,"originalValue":2}
@@ -317,28 +317,28 @@ write            : {"id":0,"name":"object 0","value":3,"originalValue":2}
 write            : {"id":1,"name":"object 1","value":1,"originalValue":0}
 write            : {"id":2,"name":"object 2","value":5,"originalValue":4}
 write            : {"id":3,"name":"object 3","value":1,"originalValue":0}
-write            : {"id":4,"name":"object 4","value":3,"originalValue":2}</pre>
-</div>
+write            : {"id":4,"name":"object 4","value":3,"originalValue":2}
+```
 
 One nice thing about transform streams is that they make no guarantee that the output will match the input in size or frequency, which lends to some interesting uses. Say you wanted to implement a filter that blocks any object with a `value` of 0.
 
-{{< highlight javascript >}}
+```js
 TransformStream.prototype._transform = function(chunk, encoding, callback) {
   if (chunk.value !== 0) this.push(chunk);
   callback();
 };
-{{< /highlight >}}
+```
 
-<div class="highlight">
-<pre>read             : {"id":0,"name":"object 0","value":2}
+```
+read             : {"id":0,"name":"object 0","value":2}
 read             : {"id":1,"name":"object 1","value":0}
 read             : {"id":2,"name":"object 2","value":4}
 read             : {"id":3,"name":"object 3","value":0}
 read             : {"id":4,"name":"object 4","value":2}
 write            : {"id":0,"name":"object 0","value":2}
 write            : {"id":2,"name":"object 2","value":4}
-write            : {"id":4,"name":"object 4","value":2}</pre>
-</div>
+write            : {"id":4,"name":"object 4","value":2}
+```
 
 Transform streams end up being the ones I write the most because it allows me to hook into established data sources and destinations to perform my desired logic.
 

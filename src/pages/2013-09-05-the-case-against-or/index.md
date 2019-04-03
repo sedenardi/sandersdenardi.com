@@ -11,7 +11,7 @@ When writing SQL queries, I try to use logic that is intuitive to myself and to 
 
 Consider a table that stores the relationships between two entities:
 
-{{< highlight sql >}}
+```sql
 CREATE TABLE Relationships
 (
   RelationshipID BIGINT,
@@ -24,15 +24,15 @@ CREATE CLUSTERED INDEX IX_Relationships_EntityID1
   ON Relationships(EntityID1);
 CREATE NONCLUSTERED INDEX IX_Relationships_EntityID2
   ON Relationships(EntityID2);
-{{< /highlight >}}
+```
 
 Say we want to get all relationships for a specific EntityID, where it is either EntityID1 or EntityID2. Because we want to get the PK and the type of the relationship, as well as the other entity to which it is associated, we're going to return all columns (this becomes important later).
 
-{{< highlight sql >}}
+```sql
 SELECT * FROM Relationships
 WHERE EntityID1 = 24434492
 OR EntityID2 = 24434492;
-{{< /highlight >}}
+```
 
 This is concise and clear, and the way most would write the query. It returns the desired results and is intuitive. However, it doesn't run quite as fast as we expect. Looking at the query plan we can see why:
 
@@ -42,13 +42,13 @@ Because we combined both query predicates, we're forced to do a <a href="http://
 
 This seems redundant, as half of our query already looks at the clustered index on the table.
 
-{{< highlight sql >}}
+```sql
 SELECT * FROM Relationships
 WHERE EntityID1 = 24434492
 UNION ALL
 SELECT * FROM Relationships
 WHERE EntityID2 = 24434492;
-{{< /highlight >}}
+```
 
 ![](./qp2.png)
 

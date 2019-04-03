@@ -13,7 +13,7 @@ Before I start using the new syntax in my queries, I wanted to investigate the p
 
 Consider a table with the following schema and indexes:
 
-{{< highlight sql >}}
+```sql
 CREATE TABLE Sources
 (
   SourceID BIGINT NOT NULL,
@@ -27,11 +27,11 @@ CREATE CLUSTERED INDEX IX_Sources_SourceTypeId_SourceDetailId
   ON Sources(SourceTypeID, SourceDetailID);
 CREATE NONCLUSTERED INDEX IX_Sources_ElementTypeId_ElementId
   ON Sources(ElementTypeID, ElementID);
-{{< /highlight >}}
+```
 
 Because there can be thousands of rows for a given SourceTypeID and SourceDetailID, I'd like to perform some pagination before returning the rows to my app. The usual way I do this is, in a subquery, perform a <a href="http://technet.microsoft.com/en-us/library/ms186734.aspx" target="_blank">ROW_NUMBER()</a> over the columns by which I want to sort. I then use the page number and the number of rows I want to calculate which rows I want (my implementation returns @numResults + 1 so I can figure out if another page of data exists):
 
-{{< highlight sql >}}
+```sql
 DECLARE @detailID BIGINT, @page INT, @numResults INT,
   @pageStart INT, @pageEnd INT;
 SELECT @detailID = 7665626, @page = 20, @numResults = 50;
@@ -47,7 +47,7 @@ SELECT SourceID FROM (
   AND s1.SourceDetailID = @detailID
 ) x
 WHERE x.ROW BETWEEN @pageStart AND @pageEnd;
-{{< /highlight >}}
+```
 
 ![](./qp1-pagination.png)
 
@@ -55,7 +55,7 @@ The query plan shows the index usage and Key Lookup required to get the data, as
 
 Here's the same query, written with he new syntax, returning the exact same rows in the exact same order:
 
-{{< highlight sql >}}
+```sql
 SELECT SourceID
 FROM Sources s1
 WHERE s1.SourceTypeID = 6
@@ -63,7 +63,7 @@ AND s1.SourceDetailID = @detailID
 ORDER BY ElementTypeID
   OFFSET (@pageStart - 1) ROWS
   FETCH NEXT (@numResults + 1) ROWS ONLY;
-{{< /highlight >}}
+```
 
 ![](./qp2-pagination.png)
 

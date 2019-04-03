@@ -38,7 +38,7 @@ Twilio's guide introduced the concept of the TwiML verbs `<Dial>` and `<Conferen
 
 When the system receives a phone call, the caller should hear a greeting, letting them know they reached the right number.
 
-{{< highlight javascript >}}
+```js
 app.post('/voice', (request, response) => {
   const twiml = new VoiceResponse();
   twiml.say('Welcome to the conference system.', {
@@ -47,11 +47,11 @@ app.post('/voice', (request, response) => {
   twiml.redirect('/gather');
   response.send(twiml.toString());
 });
-{{< /highlight >}}
+```
 
 After we say welcome (in the <a href="https://www.twilio.com/docs/api/twiml/say#attributes-voice" target="_blank">friendly "alice" voice</a>), we redirect to the route that gathers the access code.
 
-{{< highlight javascript >}}
+```js
 app.post('/gather', (request, response) => {
   const twiml = new VoiceResponse();
   const gather = twiml.gather({
@@ -65,13 +65,13 @@ app.post('/gather', (request, response) => {
   twiml.redirect('/gather');
   response.send(twiml.toString());
 });
-{{< /highlight >}}
+```
 
 One notable thing about this route is the placement of this `.say()` verb. Placing it inside of the `.gather()` verb means that the caller can begin entering digits as soon as they hear the instructions. Placing the `.say()` before the `.gather()` verb would mean the caller must wait until the instructions are finished before any input is registered. This can be a frustrating experience.
 
 After the system gets the caller's digits, we redirect to the `/join` route.
 
-{{< highlight javascript >}}
+```js
 app.post('/join', (request, response) => {
   const twiml = new VoiceResponse();
   const conference = conferences(request.body.Digits);
@@ -89,11 +89,11 @@ app.post('/join', (request, response) => {
   }
   response.send(twiml.toString());
 });
-{{< /highlight >}}
+```
 
 This route is where we'll verify that the user's access code is actually valid. In this example, we've hardcoded the conferences, and thus the check is trivial:
 
-{{< highlight javascript >}}
+```js
 const accessCodes = {
   123: 'conference 1',
   456: 'conference 2'
@@ -101,7 +101,7 @@ const accessCodes = {
 module.exports = function(code) {
   return accessCodes[code];
 };
-{{< /highlight >}}
+```
 
 If the access code is valid, `conference` will contain the name of the conference we'll pass into the `.conference()` verb, thus joining the conference. If it's not valid, we redirect back to the `/gather` route, after alerting the caller that the code they entered is wrong.
 

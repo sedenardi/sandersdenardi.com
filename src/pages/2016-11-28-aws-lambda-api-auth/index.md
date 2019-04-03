@@ -36,7 +36,7 @@ The get function itself only does a few things:
 - Read the headers to get the cookies, check if valid session exists
 - If valid return user page, if not return login page
 
-{{< highlight javascript >}}
+```js
 /* index.js */
 function get(event, context) {
   const sess = session.getSession(event.headers);
@@ -56,11 +56,11 @@ function get(event, context) {
     });
   }
 }
-{{< /highlight >}}
+```
 
 Because we're simply storing the username as part of the session, checking to see whether the session is valid is as simple as checking to see whether the user exists. For example, a user with the username "John" would have the session cookie `SID=Session::john`. Parsing it is simple string manipulation. Later on we'll see how we return the HTTP request headers to the function so we can parse the cookies to get our session.
 
-{{< highlight javascript >}}
+```js
 /* session.js */
 const cookie = require('cookie');
 const users = require('./users');
@@ -79,11 +79,11 @@ function getSession(headers) {
     user: user
   };
 }
-{{< /highlight >}}
+```
 
 Our users file is an object with usernames as keys with first, last, and plaintext password fields.
 
-{{< highlight javascript >}}
+```js
 /* users.js */
 const users = {
   john: {
@@ -99,11 +99,11 @@ const users = {
     pass: 'janepass'
   }
 };
-{{< /highlight >}}
+```
 
 Since we're serving web pages instead of JSON objects, we need to return different HTML depending on the authentication state of the browser. This example simply reads files form the local filesystem. When the user is authenticated, the rendering functions use the <a href="https://lodash.com/docs#template" target="_blank">Lodash template</a> function as a rudimentary template engine.
 
-{{< highlight javascript >}}
+```js
 /* render.js */
 const fs = require('fs');
 const path = require('path');
@@ -124,7 +124,7 @@ function user(opts, cb) {
     return cb(null, body);
   });
 };
-{{< /highlight >}}
+```
 
 ## LOGIN Function
 
@@ -134,7 +134,7 @@ The login function is fairly straightforward:
 - If authentication successful, set session and return session cookie
 - If auth fails, return failure and message
 
-{{< highlight javascript >}}
+```js
 /* index.js */
 function login(event, context) {
   const username = event.data.username;
@@ -150,11 +150,11 @@ function login(event, context) {
     return context.done(null, authRes)
   }
 };
-{{< /highlight >}}
+```
 
 Authentication is done by simply checking the credentials against our hardcoded users.
 
-{{< highlight javascript >}}
+```js
 /* authentication.js */
 const users = require('./users');
 function auth(username, pass) {
@@ -168,11 +168,11 @@ function auth(username, pass) {
     return { success: true, user: users[username] };
   }
 };
-{{< /highlight >}}
+```
 
 Generating a session is the same string manipulation we performed in parsing it, but in reverse. We'll see later on how the returned cookie is set in the HTTP response header to the browser.
 
-{{< highlight javascript >}}
+```js
 /* session.js */
 const cookieKey = 'SID';
 const cookiePrefix = 'Session::';
@@ -181,7 +181,7 @@ function setSession(user) {
   const newCookie = cookie.serialize(cookieKey, sessionId);
   return { Cookie: newCookie };
 };
-{{< /highlight >}}
+```
 
 ## LOGOUT Function
 
@@ -191,24 +191,24 @@ The logout function is very simple:
 - Invalidate and destroy user session (if exists)
 - Return immediately expiring session cookie
 
-{{< highlight javascript >}}
+```js
 /* index.js */
 function logout(event, context) {
   const sessionRes = session.getSession(event.headers);
   const sess = session.destroySession(sessionRes.user);
   context.done(null, { Cookie: sess.Cookie });
 };
-{{< /highlight >}}
+```
 
 If we were using permanent storage, we'd want to check to see if the user was actually returned by getSession and perform other logout procedures, but for now just returning an expired cookie is enough to remove it from the user's browser and effectively log them out.
 
-{{< highlight javascript >}}
+```js
 /* session.js */
 function destroySession(user) => {
   const clearCookie = cookie.serialize(cookieKey, 'empty', { maxAge: 0 });
   return { Cookie: clearCookie };
 };
-{{< /highlight >}}
+```
 
 ## Deploy functions
 
@@ -247,7 +247,7 @@ In order to make authentication work, we have to make our root `GET:/` method aw
 - Expand the **Body Mapping Template** section, select **Add mapping template**
 - Enter in `applictation/json` as the content type, save it (choosing **Yes, secure this integration**), and enter this template:
 
-{{< highlight velocity >}}
+```velocity
 {
   "headers": {
     #foreach($header in $input.params().header.keySet())
@@ -255,7 +255,7 @@ In order to make authentication work, we have to make our root `GET:/` method aw
     #end
   }
 }
-{{< /highlight >}}
+```
 
 <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html" target="_blank">Mapping templates</a> are written in Apache's <a href="http://velocity.apache.org/engine/devel/vtl-reference.html" target="_blank">Velocity Template Language</a> with <a href="http://goessner.net/articles/JsonPath/" target="_blank">JSONPath expressions</a> to define how the HTTP request maps to parameters that our Lambda function can access. This particular mapping template maps the headers of the HTTP request to a `headers` field. Recall that our function passes `event.headers` to our session functions to parse the cookies.
 
@@ -267,10 +267,10 @@ We're also going to use a body mapping template on our response. API Gateway esc
 - Under **Header Mappings**, enter `'text/html'` (with the single quotes) as the **Mapping Value** for the **Content-Type** row, hit save
 - Under **Body Mapping Templates**, delete `application/json`, add `text/html`, save it, and enter this template:
 
-{{< highlight velocity >}}
+```velocity
 #set($inputRoot = $input.path('$'))
 $inputRoot
-{{< /highlight >}}
+```
 
 ## LOGIN Resource
 
@@ -279,11 +279,11 @@ Our `POST:/login` method needs to pass credentials to our Lambda function and ma
 - On the POST **Method Execution**, select **Integration Request**
 - Under **Body Mapping Template**, add the `application/json` mapping template content type and enter this template:
 
-{{< highlight velocity >}}
+```velocity
 {
     "data": $input.body
 }
-{{< /highlight >}}
+```
 
 This simply passes the JSON body of the request to the `data` field that our Lambda function can access (recall our `login` function). To map the cookie to the response header:
 
@@ -303,7 +303,7 @@ The `POST:/logout` method has to not only read in cookies from the HTTP request,
 
 The pages we serve to the browser have simple login and logout forms. The main difference from an ordinary form post is that we're performing the requests as AJAX requests. We need to specify JSON requests and responses, and AJAX allows us to do that using `Content-Type` headers. The login page intercepts the form's post action and performs a `fetch` post instead.
 
-{{< highlight javascript >}}
+```js
 /* login.html */
 var post = function(event) {
   event.preventDefault();
@@ -333,7 +333,7 @@ var post = function(event) {
   });
 };
 document.getElementById('loginForm').addEventListener('submit', post);
-{{< /highlight >}}
+```
 
 A nice side-effect of using AJAX instead of an ordinary form post is more granular error handling and reporting.
 

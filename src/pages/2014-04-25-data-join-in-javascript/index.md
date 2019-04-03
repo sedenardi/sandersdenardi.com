@@ -16,7 +16,7 @@ To create the example data sets, I first make a large array of sequential intege
 
 The nested loop join is a fairly simple operation in JavaScript. Given two sets, you loop through each item in the first set, and for each item, you loop through the 2nd set to see if there's a match. If there is, you add it to your result set. If you are only trying to find distinct matches between the two sets, you can break out of the inner loop after you find a match (this increases performance). Nested loops exist in <a href="http://technet.microsoft.com/en-us/library/aa178178(v=sql.80).aspx" target="_blank">SQL Server</a>.
 
-{{< highlight javascript >}}
+```js
 var o = [];
 for (var i = 0; i < t1.length; i++) {
   for (var j = 0; j < t2.length; j++) {
@@ -26,11 +26,11 @@ for (var i = 0; i < t1.length; i++) {
     }
   }
 }
-{{< /highlight >}}
+```
 
 For other libraries the syntax is similar to JavaScript's <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach" target="_blank">forEach</a> function. The main difference is that these functions call a separate function for each item in the array.
 
-{{< highlight javascript >}}
+```js
 var o = [];
 t1.forEach(function(v) {
   t2.forEach(function(w) {
@@ -39,46 +39,46 @@ t1.forEach(function(v) {
     }
   });
 });
-{{< /highlight >}}
+```
 
 For Underscore's<span style="color: #333333; font-size: 15.454545021057129px; font-style: normal; line-height: 22.159090042114258px;"> </span><a style="font-size: 15.454545021057129px; font-style: normal; line-height: 22.159090042114258px; text-decoration: underline;" href="http://underscorejs.org/#each" target="_blank">each</a>, like the built-in forEach, there is no "break" function so I made another test using the <a href="http://underscorejs.org/#every" target="_blank">every</a> function. I've also included Underscore's <a href="http://underscorejs.org/#intersection" target="_blank">intersection</a>, <a href="http://underscorejs.org/#reduce" target="_blank">reduce</a>, and <a href="http://underscorejs.org/#filter" target="_blank">filter</a> functions.
 
 Like the nested loop join, the merge join (also called the sort-merge join) is a simple operation. The idea is that, once sorted, you can linearly go through each set and compare values. Merge joins also exist in <a href="http://technet.microsoft.com/en-us/library/ms190967(v=sql.105).aspx" target="_blank">SQL Server</a>.
 
-{{< highlight javascript >}}
+```js
 var i = 0, j = 0, o = [];
 while(i < t1.length && j < t2.length) {
   if(t1[i] < t2[j]) i++;   else if(t1[i] > t2[j]) j++;
   else { o.push(t1[i]); i++; j++; }
 }
-{{< /highlight >}}
+```
 
 Another join technique I tried was converting the arrays to objects, with each item of the original array the field name of the new object. So this
 
-{{< highlight javascript >}}
+```js
 var array = [1,2,3];
-{{< /highlight >}}
+```
 
 becomes this.
 
-{{< highlight javascript >}}
+```js
 var object = {
   1: true,
   2: true,
   3: true
 };
-{{< /highlight >}}
+```
 
 Using two objects instead of two arrays eliminates one of the loops entirely. I loop through the first object's fields, and for each one I check if the field is undefined in the second object.
 
-{{< highlight javascript >}}
+```js
 var o = [];
 for (var i in a1) {
   if (typeof a2[i] !== 'undefined') {
     o.push(i);
   }
 }
-{{< /highlight >}}
+```
 
 I ran two sets of benchmarks, one for <a href="http://jsperf.com/dataset-join/2" target="_blank">unsorted sets</a> and one for <a href="http://jsperf.com/dataset-join/3" target="_blank">sorted sets</a>.
 

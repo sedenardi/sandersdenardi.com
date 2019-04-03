@@ -14,7 +14,7 @@ Android has facilitated the implementation of infinite scrolling of ListViews fo
 
 ListViews allow you to monitor when a scroll happens and the state of the ListView by attaching an <a href="http://developer.android.com/reference/android/widget/AbsListView.OnScrollListener.html" target="_blank">OnScrollListener</a>. The relevant method is <a href="http://developer.android.com/reference/android/widget/AbsListView.OnScrollListener.html#onScroll(android.widget.AbsListView, int, int, int)" target="_blank">onScroll()</a>, which fires every time the ListView moves and passes in the position of the ListView for each call. In this method, if we determine that the end is near (by figuring out how many items are below the view port), then we call the callback method endIsNear() (which performs any loading).
 
-{{< highlight java >}}
+```java
 public void onScroll(AbsListView view, int firstVisibleItem,
   int visibleItemCount, int totalItemCount) {
   if (totalItemCount - (firstVisibleItem + 1 + visibleItemCount) < SCROLL_OFFSET &&
@@ -22,7 +22,7 @@ public void onScroll(AbsListView view, int firstVisibleItem,
     listener.endIsNear();
   }
 }
-{{< /highlight >}}
+```
 
 Here, SCROLL_OFFSET is the number of items in the list below the view port. I usually have this set to 2.
 
@@ -30,7 +30,7 @@ Here, SCROLL_OFFSET is the number of items in the list below the view port. I us
 
 ListViews use Adapters as a bridge between themselves and the underlying data. Adapters usually serve up a similar view for every item in the underlying data structure, but we will want to show some indication to the user that more data is loading in the background. In our abstract class we override BaseAdapter's getView() to return either a real view or a special loading view.
 
-{{< highlight java >}}
+```java
 public View getView(int position, View convertView, ViewGroup parent) {
   if (!doneLoading && position >= getItems().size()) {
     return getLoadingView(inflater, parent);
@@ -38,7 +38,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
     return getRealView(inflater, position, convertView, parent);
   }
 }
-{{< /highlight >}}
+```
 
 If the requested position is the last one in the list, and we haven't finished loading all the data available, then we serve up a fixed loading view. Otherwise we pass along the parameters to get a real view. Both methods are abstract to be implemented by the user.
 

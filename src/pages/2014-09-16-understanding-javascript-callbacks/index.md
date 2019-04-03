@@ -10,18 +10,18 @@ The first step in understanding the concept of Javascript callbacks is to realiz
 
 Say you have this code:
 
-{{< highlight javascript >}}
+```js
 var f = function() {
   console.log(5);
 };
 f();
-{{< /highlight >}}
+```
 
 This is a pretty simple example. We declare a function 'f' and invoke it by using '()'.
 
 Now, let's create another function:
 
-{{< highlight javascript >}}
+```js
 var f = function() {
   console.log(5);
 };
@@ -29,11 +29,11 @@ var runFunc = function(func) {
   func();
 };
 runFunc(f);
-{{< /highlight >}}
+```
 
 Our new function 'runFunc' takes in a single parameter, and invokes it. This invocation of the function parameter is essentially a callback.
 
-{{< highlight javascript >}}
+```js
 var f = function() {
   console.log('Moving on...');
 };
@@ -45,13 +45,13 @@ var runFunc = function(number,callback) {
   callback();
 };
 runFunc(4,f);
-{{< /highlight >}}
+```
 
 So here, my function 'runFunc' takes in 2 parameters. After it does some 'meaningful' work on my first parameter, I want it to move on to my callback function (in this case 'f'). That's the main purpose of a callback function, to define the behavior I want to happen _after_ a given function ends. Javascript is all about re-usability, and this is one of the most powerful tenants of that.
 
 With my super important runFunc function, look what I can do:
 
-{{< highlight javascript >}}
+```js
 var f = function(number) {
   console.log('Saving ' + number);
 };
@@ -67,7 +67,7 @@ var runFunc = function(number,callback) {
 };
 runFunc(4,f);
 runFunc(5,g);
-{{< /highlight >}}
+```
 
 Now my callback functions 'f' and 'g' take a parameter to do work on. My main function 'runFunc' does the same logic regardless, but I can reuse the same code and do something differently with the result of it.
 
