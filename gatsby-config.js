@@ -104,6 +104,7 @@ module.exports = {
         // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
       }
     },
-    'gatsby-plugin-catch-links'
+    'gatsby-plugin-catch-links',
+    'gatsby-plugin-sitemap'
   ],
 };
