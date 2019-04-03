@@ -19,6 +19,7 @@ const SEO = function({ description, lang, meta, keywords, title }) {
             title
             description
             author
+            siteImage
           }
         }
       }
@@ -52,8 +53,12 @@ const SEO = function({ description, lang, meta, keywords, title }) {
           content: 'website',
         },
         {
+          property: 'og:image',
+          content: site.siteMetadata.siteImage
+        },
+        {
           name: 'twitter:card',
-          content: 'summary',
+          content: 'summary_large_image',
         },
         {
           name: 'twitter:creator',
@@ -67,6 +72,10 @@ const SEO = function({ description, lang, meta, keywords, title }) {
           name: 'twitter:description',
           content: metaDescription,
         },
+        {
+          name: 'twitter:image',
+          content: site.siteMetadata.siteImage
+        }
       ]
         .concat(
           keywords.length > 0

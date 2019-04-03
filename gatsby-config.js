@@ -4,6 +4,7 @@ module.exports = {
     author: 'Sanders DeNardi',
     description: 'Personal blog by Sanders DeNardi.',
     siteUrl: 'https://www.sandersdenardi.com/',
+    siteImage: 'https://www.sandersdenardi.com/twitter-card.jpg',
     social: {
       twitter: 'srednass',
       github: 'sedenardi',
