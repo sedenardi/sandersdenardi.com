@@ -59,7 +59,10 @@ const Projects = function(props) {
     <div className="tw-text-center lg:tw-text-left tw-text-2xl tw-font-thin tw-pt-4 lg:tw-pt-8">
       <a className="tw-cursor-pointer lg:tw-cursor-default tw-pt-4 tw-no-underline hover:tw-no-underline active:tw-no-underline" onClick={() => setExpanded(!expanded)}>
         <span className="tw-hidden lg:tw-inline">Projects</span>
-        <span className="lg:tw-hidden">Projects {expanded ? '▲' : '▼'}</span>
+        <span className="lg:tw-hidden">
+          Projects
+          <span className="tw-text-sm">{expanded ? '▲' : '▼'}</span>
+        </span>
       </a>
       <ul className={lsCls}>
         {props.projects.map((p) => {
