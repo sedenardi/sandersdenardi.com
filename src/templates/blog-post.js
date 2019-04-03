@@ -19,14 +19,14 @@ const BlogPostTemplate = function(props) {
         <br />
         <br />
         {previous && (
-          <Link to={previous.fields.slug} rel="prev">
+          <Link to={previous.frontmatter.url} rel="prev">
             ← {previous.frontmatter.title}
           </Link>
         )}
         <br />
         <br />
         {next && (
-          <Link className="tw-block tw-text-right" to={next.fields.slug} rel="next">
+          <Link className="tw-block tw-text-right" to={next.frontmatter.url} rel="next">
             {next.frontmatter.title} →
           </Link>
         )}
@@ -53,14 +53,14 @@ export const pageQuery = graphql`
         }
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(frontmatter: { url: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
       html
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
-        slug
+        url
       }
     }
   }

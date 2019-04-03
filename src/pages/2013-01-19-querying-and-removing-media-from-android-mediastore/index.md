@@ -2,7 +2,7 @@
 title: Querying And Removing Media From The Android MediaStore
 date: 2013-01-19T17:49:06-05:00
 author: Sanders
-slug: querying-and-removing-media-from-android-mediastore/
+url: /querying-and-removing-media-from-android-mediastore/
 tags:
   - android
 ---

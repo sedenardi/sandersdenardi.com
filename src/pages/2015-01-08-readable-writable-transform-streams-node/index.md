@@ -2,7 +2,7 @@
 title: Readable, Writable, and Transform Streams in Node.js
 date: 2015-01-08T14:43:51-05:00
 author: Sanders
-slug: readable-writable-transform-streams-node/
+url: /readable-writable-transform-streams-node/
 tags:
   - javascript
   - nodejs

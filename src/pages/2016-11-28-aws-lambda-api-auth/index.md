@@ -1,8 +1,8 @@
 ---
 title: Web Authentication With AWS Lambda and API Gateway
-date: 2016-11-30T22:34:05-05:00
+date: 2016-11-28T22:34:05-05:00
 author: Sanders
-slug: aws-lambda-api-auth/
+url: /aws-lambda-api-auth/
 tags:
   - aws
   - lambda

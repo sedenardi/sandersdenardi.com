@@ -2,7 +2,7 @@
 title: Queries in SELECT statements vs APPLY in MS SQL Server
 date: 2013-05-07T12:25:28-04:00
 author: Sanders
-slug: queries-in-select-statements-vs-apply/
+url: /queries-in-select-statements-vs-apply/
 tags:
   - sql
   - sql-server

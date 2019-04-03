@@ -2,7 +2,7 @@
 title: Improving an RSS Twitter Bot
 date: 2017-03-31T22:04:52-04:00
 author: Sanders
-slug: once-twitter-bot/
+url: /once-twitter-bot/
 tags:
   - aws
   - lambda

@@ -2,7 +2,7 @@
 title: Pagination Syntax in SQL Server 2012
 date: 2013-09-13T13:30:08-04:00
 author: Sanders
-slug: pagination-syntax-in-sql-server-2012/
+url: /pagination-syntax-in-sql-server-2012/
 tags:
   - sql
   - sql-server

@@ -2,7 +2,7 @@
 title: The Case Against 'OR' in MS SQL Server
 date: 2013-09-05T19:06:25-04:00
 author: Sanders
-slug: the-case-against-or/
+url: /the-case-against-or/
 tags:
   - sql
   - sql-server

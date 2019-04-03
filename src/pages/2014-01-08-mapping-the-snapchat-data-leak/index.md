@@ -2,7 +2,7 @@
 title: Mapping the Snapchat Data Leak
 date: 2014-01-08T20:14:29-05:00
 author: Sanders
-slug: mapping-the-snapchat-data-leak/
+url: /mapping-the-snapchat-data-leak/
 tags:
   - data-visualization
   - javascript

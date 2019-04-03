@@ -2,7 +2,7 @@
 title: Hashing With SQL Server CLR
 date: 2013-11-10T14:19:30-05:00
 author: Sanders
-slug: hashing-with-sql-server-clr/
+url: /hashing-with-sql-server-clr/
 tags:
   - sql
   - sql-server

@@ -2,7 +2,7 @@
 title: Creating a Conference System in Twilio
 date: 2017-05-05T19:12:10-04:00
 author: Sanders
-slug: twilio-conference-system/
+url: /twilio-conference-system/
 tags:
   - twilio
   - javascript

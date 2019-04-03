@@ -17,7 +17,7 @@ const BlogIndex = function(props) {
       />
       {posts.map(({ node }) => {
         return (
-          <PostItem key={node.frontmatter.slug} index post={node} />
+          <PostItem key={node.frontmatter.title} index post={node} />
         );
       })}
     </Layout>
@@ -49,7 +49,7 @@ export const pageQuery = graphql`
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             title
-            slug
+            url
           }
         }
       }

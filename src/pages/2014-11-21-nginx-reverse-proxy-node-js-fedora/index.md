@@ -2,7 +2,7 @@
 title: Setting up Nginx Reverse Proxy for Node.JS on Fedora
 date: 2014-11-21T13:21:31-05:00
 author: Sanders
-slug: nginx-reverse-proxy-node-js-fedora/
+url: /nginx-reverse-proxy-node-js-fedora/
 tags:
   - fedora
   - nginx

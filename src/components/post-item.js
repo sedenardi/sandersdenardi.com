@@ -3,9 +3,9 @@ import { Link } from 'gatsby';
 
 const PostItem = function(props) {
   const { post } = props;
-  const titleStr = post.frontmatter.title || post.fields.slug;
+  const titleStr = post.frontmatter.title;
   const title = props.index ? (
-    <Link className="tw-text-black" to={post.frontmatter.slug}>
+    <Link className="tw-text-black" to={post.frontmatter.url}>
       {titleStr}
     </Link>
   ) : titleStr;
