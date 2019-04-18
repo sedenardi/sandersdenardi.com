@@ -37,4 +37,12 @@ h2, h4 {
   @apply .tw-mb-4;
 }
 
+blockquote {
+  @apply .tw-border-l-4;
+  @apply .tw-border-solid;
+  @apply .tw-border-grey;
+  @apply .tw-text-grey-darker;
+  @apply .tw-px-4;
+}
+
 @import 'prism.scss';
