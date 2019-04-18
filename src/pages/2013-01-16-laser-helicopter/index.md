@@ -9,7 +9,7 @@ tags:
   - mods
   - soldering
 ---
-I received the <a href="http://www.amazon.com/Syma-S107-S107G-Helicopter-Colors/dp/8499000606" target="_blank">Syma 107G R/C Helicopter</a> as a present recently. After a few days of flying it around my apartment giddily (and tormenting the person who got it for me) I naturally began to think about different modifications I could perform to make it unique. I thought about adding stronger motors, replacing or a second battery, and changing the propellers. While all of these are still good mods, they weren't immediately practical because I didn't have the materials to do any of them.
+I received the [Syma 107G R/C Helicopter](http://www.amazon.com/Syma-S107-S107G-Helicopter-Colors/dp/8499000606) as a present recently. After a few days of flying it around my apartment giddily (and tormenting the person who got it for me) I naturally began to think about different modifications I could perform to make it unique. I thought about adding stronger motors, replacing or a second battery, and changing the propellers. While all of these are still good mods, they weren't immediately practical because I didn't have the materials to do any of them.
 
 ![Syma 107G With Lasers](./img-1.jpg)
 
@@ -17,7 +17,7 @@ What I do have are over a dozen laser modules from an unfinished project. If you
 
 Before we get started, we need to figure out the parts and tools requirements for this project:
 
-- Laser module(s), must operate at 4.2V (I am using <a href="http://dx.com/p/6mm-5mw-red-laser-module-3-5-4-5v-13378" target="_blank">these</a>)
+- Laser module(s), must operate at 4.2V (I am using [these](http://dx.com/p/6mm-5mw-red-laser-module-3-5-4-5v-13378))
 - Phillips head screwdriver, size 00
 - Soldering iron
 - Super glue or equivalent

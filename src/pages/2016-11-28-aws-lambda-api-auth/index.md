@@ -101,7 +101,7 @@ const users = {
 };
 ```
 
-Since we're serving web pages instead of JSON objects, we need to return different HTML depending on the authentication state of the browser. This example simply reads files form the local filesystem. When the user is authenticated, the rendering functions use the <a href="https://lodash.com/docs#template" target="_blank">Lodash template</a> function as a rudimentary template engine.
+Since we're serving web pages instead of JSON objects, we need to return different HTML depending on the authentication state of the browser. This example simply reads files form the local filesystem. When the user is authenticated, the rendering functions use the [Lodash template](https://lodash.com/docs#template) function as a rudimentary template engine.
 
 ```js
 /* render.js */
@@ -214,7 +214,7 @@ function destroySession(user) => {
 
 ### Create IAM Role
 
-Most resources in AWS operate under some IAM user or role, and Lambda functions are no different. In order for the functions to access other resources, like logging to CloudWatch or read and write to S3, you must create an IAM role for them. <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html#roles-creatingrole-service-console" target="_blank">AWS docs</a> do a good job of breaking down the steps, but the main things to keep in mind are:
+Most resources in AWS operate under some IAM user or role, and Lambda functions are no different. In order for the functions to access other resources, like logging to CloudWatch or read and write to S3, you must create an IAM role for them. [AWS docs](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html#roles-creatingrole-service-console) do a good job of breaking down the steps, but the main things to keep in mind are:
 
 - **Select Role Type**: AWS Lambda
 - **Policy**: AWSLambdaBasicExecutionRole (allows logging)
@@ -257,7 +257,7 @@ In order to make authentication work, we have to make our root `GET:/` method aw
 }
 ```
 
-<a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html" target="_blank">Mapping templates</a> are written in Apache's <a href="http://velocity.apache.org/engine/devel/vtl-reference.html" target="_blank">Velocity Template Language</a> with <a href="http://goessner.net/articles/JsonPath/" target="_blank">JSONPath expressions</a> to define how the HTTP request maps to parameters that our Lambda function can access. This particular mapping template maps the headers of the HTTP request to a `headers` field. Recall that our function passes `event.headers` to our session functions to parse the cookies.
+[Mapping templates](http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html) are written in Apache's [Velocity Template Language](http://velocity.apache.org/engine/devel/vtl-reference.html) with [JSONPath expressions](http://goessner.net/articles/JsonPath/) to define how the HTTP request maps to parameters that our Lambda function can access. This particular mapping template maps the headers of the HTTP request to a `headers` field. Recall that our function passes `event.headers` to our session functions to parse the cookies.
 
 We're also going to use a body mapping template on our response. API Gateway escapes all return strings by default, which makes sense for a JSON API. But since we'll be serving web pages, we'll need to set the `Content-Type` to `text/html` and set a body mapping template to return the HTML unescaped.
 
@@ -344,8 +344,8 @@ If you do end up using this for a serious project, I strongly consider the follo
 - Deploy to its own domain or sub-domain. Once you deploy the API, the **Invoke URL** provided won't work unless you add a trailing slash so you can access the /login and /logout resources.
 - Use an industry-standard password hashing function, like bcrypt, to store and check passwords
 - Generate *actual* session hashes and permanently store them for efficient lookup
-- Instead of bundling the login and other HTML pages with the app, use the <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html" target="_blank">aws-sdk</a> to access files stored in S3. This eliminates the need to re-deploy your Lambda functions every time you want to modify your web pages (very useful for testing). An important note is that you'll need to add the S3 policy to your functions' IAM role to grant access.
+- Instead of bundling the login and other HTML pages with the app, use the [aws-sdk](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html) to access files stored in S3. This eliminates the need to re-deploy your Lambda functions every time you want to modify your web pages (very useful for testing). An important note is that you'll need to add the S3 policy to your functions' IAM role to grant access.
 
 API Gateway and Lambda functions provide a low-cost and low-maintenance way to serve web pages, and can easily be configured to support authentication. This serverless setup could be used to serve a single page application and API endpoints, or so simply password protect some HTML content. Not having to worry about server infrastructure or scalability issues (outside of your non-S3 storage) is a huge advantage over a traditional environment. While this won't be appropriate for all workloads, it's definitely something to consider when starting a new project.
 
-A working version of this web app can be accessed <a href="https://0x9ic1jj07.execute-api.us-east-1.amazonaws.com/prod/" target="_blank">here</a>. Look up in the post for the test credentials. All code can be found <a href="https://github.com/sedenardi/lambda-session-auth" target="_blank">here</a>, including the exported Swagger + API Gateway Extensions. Reach out to me on Twitter or GitHub with any questions or issues.
+A working version of this web app can be accessed [here](https://0x9ic1jj07.execute-api.us-east-1.amazonaws.com/prod/). Look up in the post for the test credentials. All code can be found [here](https://github.com/sedenardi/lambda-session-auth), including the exported Swagger + API Gateway Extensions. Reach out to me on Twitter or GitHub with any questions or issues.

@@ -73,14 +73,14 @@ Now my callback functions 'f' and 'g' take a parameter to do work on. My main fu
 
 So that's mostly the syntactical explanation of callbacks. The other main reason to use them is to maintain asynchronous behavior. Here are a few great explanations on callbacks I'd recommend:
 
-<a href="http://www.impressivewebs.com/callback-functions-javascript/" target="_blank">http://www.impressivewebs.com/callback-functions-javascript/</a>
+http://www.impressivewebs.com/callback-functions-javascript/
 
-<a href="http://cwbuecheler.com/web/tutorials/2013/javascript-callbacks/" target="_blank">http://cwbuecheler.com/web/tutorials/2013/javascript-callbacks/</a>
+http://cwbuecheler.com/web/tutorials/2013/javascript-callbacks/
 
 The first is a simple explanation, the second does a bit deeper with asynchronous flow using callbacks. It mentions Node programming (which is server-side JS), but It also applies to client-side JS just as well.
 
-<a href ="http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/" target="_blank">http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/</a>
+http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
 
 This goes into the subject a bit deeper, with concepts such as scope and closures. Once you're comfortable with the core concept of a callback I'd recommend reading up on it a bit more.
 
-Finally, I highly recommend <a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742" target="_blank">JavaScript: The Good Parts</a> by <a href="http://en.wikipedia.org/wiki/Douglas_Crockford" target="_blank">Douglas Crockford</a>. It offers a clear and concise explanation of the trickier parts of Javascript.
+Finally, I highly recommend [JavaScript: The Good Parts](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742) by [Douglas Crockford](http://en.wikipedia.org/wiki/Douglas_Crockford). It offers a clear and concise explanation of the trickier parts of Javascript.

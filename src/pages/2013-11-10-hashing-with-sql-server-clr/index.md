@@ -7,9 +7,9 @@ tags:
   - sql
   - sql-server
 ---
-I have been looking at using hashes in a computed column to determine equality among rows, rather than compare each column. While running some tests, I encountered a limitation with SQL Server's <a href="http://technet.microsoft.com/en-us/library/ms174415.aspx" target="_blank">HASHBYTES</a> function: the input can only be 8000 bytes or smaller. This won't work for our purposes, as some of our tables have NVARCHAR(MAX) columns whose maximum length exceeds 8000 bytes. One solution I'm looking into is using a <a href="http://technet.microsoft.com/en-us/library/ms131102.aspx" target="_blank">CLR</a>. **UPDATE**: I've added remarks and benchmarks for the undocumented function "fn\_repl\_hash_binary".
+I have been looking at using hashes in a computed column to determine equality among rows, rather than compare each column. While running some tests, I encountered a limitation with SQL Server's [HASHBYTES](http://technet.microsoft.com/en-us/library/ms174415.aspx) function: the input can only be 8000 bytes or smaller. This won't work for our purposes, as some of our tables have NVARCHAR(MAX) columns whose maximum length exceeds 8000 bytes. One solution I'm looking into is using a [CLR](http://technet.microsoft.com/en-us/library/ms131102.aspx). **UPDATE**: I've added remarks and benchmarks for the undocumented function "fn\_repl\_hash_binary".
 
-Looking at C#'s built-in hashing capabilities (supported through <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography%28v=vs.110%29.aspx" target="_blank">System.Security.Cryptography</a>), I see the algorithms supported by both HASHBYTES and C# are MD5, SHA1, SHA256, and SHA512. Since I have no preference over which hashing algorithm to use (the probability of collision is low enough for each, and I am not concerned with security), I'm going to benchmark each and pick the fastest one. Instead of writing a separate function for each algorithm, I can use a simple switch statement to pick between them.
+Looking at C#'s built-in hashing capabilities (supported through [System.Security.Cryptography](http://msdn.microsoft.com/en-us/library/system.security.cryptography%28v=vs.110%29.aspx)), I see the algorithms supported by both HASHBYTES and C# are MD5, SHA1, SHA256, and SHA512. Since I have no preference over which hashing algorithm to use (the probability of collision is low enough for each, and I am not concerned with security), I'm going to benchmark each and pick the fastest one. Instead of writing a separate function for each algorithm, I can use a simple switch statement to pick between them.
 
 ```csharp
 [SqlFunction(IsDeterministic = true)]
@@ -62,7 +62,7 @@ SELECT dbo.GetHash('MD5',CONVERT(VARBINARY(8000),N'test'))
 --0xC8059E2EC7419F590E79D7F1B774BFE6
 ```
 
-To verify our function accomplishes what we created it for in the first place, we need to come up with an input that exceeds HASHBYTES's 8000 byte limit. I'll create an input of 10,000 bytes by using SQL Server's <a href="http://technet.microsoft.com/en-us/library/ms174383.aspx" target="_blank">REPLICATE</a>  function. I'll pick a simple string, "test1", and replicate it 2000 times to create an input of 10,000 bytes.
+To verify our function accomplishes what we created it for in the first place, we need to come up with an input that exceeds HASHBYTES's 8000 byte limit. I'll create an input of 10,000 bytes by using SQL Server's [REPLICATE](http://technet.microsoft.com/en-us/library/ms174383.aspx) function. I'll pick a simple string, "test1", and replicate it 2000 times to create an input of 10,000 bytes.
 
 ```sql
 DECLARE @INPUT VARCHAR(MAX);
@@ -75,7 +75,7 @@ SELECT dbo.GetHash('MD5',CONVERT(VARBINARY(MAX),@INPUT));
 
 The REPLICATE function requires we cast our test string as a VARCHAR(MAX) in order for it to output beyond 8000 bytes. It's a bit annoying how these 8000 bytes limitations keep popping up.
 
-Now that we know our function works, we can go about testing its performance. We can't test HASHBYTES and our CLR function with inputs over 8000 bytes, so to benchmark between the two we'll create a table with test values that vary uniformly in length. Since I'm a fan of using random values rather than a static "test1&#8243; string, I'm going to use SQL Server's <a href="http://technet.microsoft.com/en-us/library/ms190348.aspx" target="_blank">NEWID</a> function to generate a 36 character long string and replicate it to the desired length. The code for doing this can be found in <a href="https://github.com/sedenardi/sql-hashing-clr" target="_blank">my GitHub repository</a> so I won't go into detail about it here, but essentially I create a table with 90000 randomly generated values of different lengths and using 2 WHILE loops run each function over the values several times. To measure the performance, I record the CPU usage from <a href="http://technet.microsoft.com/en-us/library/ms177648.aspx" target="_blank">sys.dm_exec_requests</a> before and after I run the function.
+Now that we know our function works, we can go about testing its performance. We can't test HASHBYTES and our CLR function with inputs over 8000 bytes, so to benchmark between the two we'll create a table with test values that vary uniformly in length. Since I'm a fan of using random values rather than a static "test1&#8243; string, I'm going to use SQL Server's [NEWID](http://technet.microsoft.com/en-us/library/ms190348.aspx) function to generate a 36 character long string and replicate it to the desired length. The code for doing this can be found in [my GitHub repository](https://github.com/sedenardi/sql-hashing-clr) so I won't go into detail about it here, but essentially I create a table with 90000 randomly generated values of different lengths and using 2 WHILE loops run each function over the values several times. To measure the performance, I record the CPU usage from [sys.dm_exec_requests](http://technet.microsoft.com/en-us/library/ms177648.aspx) before and after I run the function.
 
 | ALGORITHM    | CPUAVERAGE | CPUMEDIAN | CPUSTD_DEV |
 | ------------ | ---------- | --------- | ---------- |
@@ -88,7 +88,7 @@ Now that we know our function works, we can go about testing its performance. We
 | CLR_SHA2_512 | 7610       | 6786      | 2583       |
 | CLR_SHA2_256 | 10102      | 8627      | 3548       |
 
-As you can see, there's a pretty big performance drop moving from HASHBYTES to a CLR function. I suspect this is due to converting the table row into a <a href="http://msdn.microsoft.com/en-us/library/system.data.sqltypes.sqlbytes(v=vs.110).aspx" target="_blank">SqlByte</a> stream for the CLR. This performance impact is unfortunate, but something we'll have to deal with if we're using columns larger than 8000 bytes.
+As you can see, there's a pretty big performance drop moving from HASHBYTES to a CLR function. I suspect this is due to converting the table row into a [SqlByte](http://msdn.microsoft.com/en-us/library/system.data.sqltypes.sqlbytes(v=vs.110).aspx) stream for the CLR. This performance impact is unfortunate, but something we'll have to deal with if we're using columns larger than 8000 bytes.
 
 One optimization we can do is to use the CLR only when needed. Suppose we create a new function that checks the length of the input and decides whether to use HASHBYTES or the CLR.
 
@@ -155,4 +155,4 @@ As with most things in SQL Server, hashing is a prime example of knowing your da
 
 **EDIT 3**: After several years, I realized that my CLR benchmarks have a significant flaw. I should be using a SqlBinary parameter instead of a SqlBytes parameter so the incoming data isn't buffered into a stream, reducing performance. I welcome pull requests to fix this issue.
 
-<a href="https://github.com/sedenardi/sql-hashing-clr">View this post's code on GitHub</a>.
+View this post's code on [GitHub](https://github.com/sedenardi/sql-hashing-clr).

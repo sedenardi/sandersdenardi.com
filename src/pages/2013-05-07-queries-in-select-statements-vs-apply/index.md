@@ -26,7 +26,7 @@ WHERE e.EntityID = 1234;
 
 This query will get latest name (if a name exists in the Names table) for the entity I specify. If a name for the entity does not exist, the Name column will be NULL.
 
-An alternate (and in my experience seldom-used) way to do this is to use the MS SQL Server-specific operator <a href="http://technet.microsoft.com/en-us/library/ms175156.aspx" target="_blank">OUTER APPLY</a>. In short, APPLY runs a function (or in our example a query) for each row in the outer expression. You can think of the difference between CROSS APPLY and OUTER APPLY like the difference between INNER JOIN and LEFT OUTER JOIN, where the former runs the function for matched rows while the latter for all rows in the outer query. Rewriting the above query using the APPLY:
+An alternate (and in my experience seldom-used) way to do this is to use the MS SQL Server-specific operator [OUTER APPLY](http://technet.microsoft.com/en-us/library/ms175156.aspx). In short, APPLY runs a function (or in our example a query) for each row in the outer expression. You can think of the difference between CROSS APPLY and OUTER APPLY like the difference between INNER JOIN and LEFT OUTER JOIN, where the former runs the function for matched rows while the latter for all rows in the outer query. Rewriting the above query using the APPLY:
 
 ```sql
 SELECT
@@ -41,6 +41,6 @@ FROM Entities e
 WHERE e.EntityID = 1234;
 ```
 
-This query returns the identical results as the first one. If we turn on <a href="http://msdn.microsoft.com/en-us/library/ms184361.aspx" target="_blank">STATISTICS IO</a> we will see that they perform the exact same number of scans and logical reads on both tables.
+This query returns the identical results as the first one. If we turn on [STATISTICS IO](http://msdn.microsoft.com/en-us/library/ms184361.aspx) we will see that they perform the exact same number of scans and logical reads on both tables.
 
 So the question now is which one is better to use. While I feel that using APPLY makes for cleaner code, it is not ANSI-SQL compatible since it is a MSSQL-specific operation. Further, APPLY may not be familiar to DBAs coming from other SQL implementations.

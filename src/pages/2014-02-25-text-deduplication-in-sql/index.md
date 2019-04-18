@@ -28,7 +28,7 @@ Note that I also remove articles because they are often omitted, and the word "a
 
 Now this technique finds dupes in a lot of cases, but not all. If one source omits an artist's nickname ("Damian Marley" vs "Damian 'Jr. Gong' Marley"), or a prefix in their name ("Lauryn Hill" vs "Ms. Lauryn Hill" vs "Miss Lauryn Hill"), this technique will not identify the duplicates.
 
-Inspired by <a href="http://programmers.stackexchange.com/questions/107735/how-do-i-go-about-data-deduplication-at-scale" target="_blank">this post</a>, I decided to build a table of rolling hashes and use the number of hits for different artists to identify duplicates. <a href="http://en.wikipedia.org/wiki/Rolling_hash" target="_blank">Rolling hashes</a> move a window of fixed length through a string to generate small hashes for comparison. Using a window size of 4 (sort of arbitrarily chosen), I could break up the name "Lauryn Hill" like so (converting to lower case to aid comparison):
+Inspired by [this post](http://programmers.stackexchange.com/questions/107735/how-do-i-go-about-data-deduplication-at-scale), I decided to build a table of rolling hashes and use the number of hits for different artists to identify duplicates. [Rolling hashes](http://en.wikipedia.org/wiki/Rolling_hash) move a window of fixed length through a string to generate small hashes for comparison. Using a window size of 4 (sort of arbitrarily chosen), I could break up the name "Lauryn Hill" like so (converting to lower case to aid comparison):
 
 ```
  lauryn hill
@@ -42,7 +42,7 @@ Inspired by <a href="http://programmers.stackexchange.com/questions/107735/how-d
        [hill]
 ```
 
-To do this for the entire collection of artists, I can loop through the table until my hash window reaches the end of the longest string (using "<a href="https://dev.mysql.com/doc/refman/5.0/en/information-functions.html#function_row-count" target="_blank">row_count()</a>" to determine when that happens):
+To do this for the entire collection of artists, I can loop through the table until my hash window reaches the end of the longest string (using "[row_count()](https://dev.mysql.com/doc/refman/5.0/en/information-functions.html#function_row-count)" to determine when that happens):
 
 ```sql
 DECLARE windowSize INT;
@@ -113,4 +113,4 @@ ORDER BY diff ASC;
 
 A couple notes on performance. For an artist table size of around 1300 rows, my hashes table had around 20k rows. This will obviously vary depending on your chosen hash window size and the length of names you're comparing. Additionally, indexing your hashing table is extremely important. An index on the "hash" column was critical because you're essentially doing n^2 comparisons when you join on itself, but I also put an index on "artistId" to make the aggregate in the final query faster.
 
-This code in MySQL stored procedures, as well as the schemas for the tables used, can be found on <a href="https://github.com/sedenardi/festival-guide/tree/master/db_models" target="_blank">GitHub</a>.
+This code in MySQL stored procedures, as well as the schemas for the tables used, can be found on [GitHub](https://github.com/sedenardi/festival-guide/tree/master/db_models).

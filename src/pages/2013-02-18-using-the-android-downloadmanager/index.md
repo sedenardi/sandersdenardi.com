@@ -6,7 +6,7 @@ url: /using-the-android-downloadmanager/
 tags:
   - android
 ---
-Since Gingerbread, Android has included support for handling long-running downloads via the <a href="http://developer.android.com/reference/android/app/DownloadManager.html" target="_blank">DownloadManager</a>. Using previous versions apps had to manually handle threading, displaying progress to the user, connectivity issues, and registering the downloaded media with the <a href="http://developer.android.com/reference/android/provider/MediaStore.html" target="_blank">MediaStore</a> (if applicable). In this example, I’m going to use the built-in DownloadManager to download an MP3 and handle its completion via a <a href="http://developer.android.com/reference/android/content/BroadcastReceiver.html" target="_blank">BroadcastReceiver</a>.
+Since Gingerbread, Android has included support for handling long-running downloads via the [DownloadManager](http://developer.android.com/reference/android/app/DownloadManager.html). Using previous versions apps had to manually handle threading, displaying progress to the user, connectivity issues, and registering the downloaded media with the [MediaStore](http://developer.android.com/reference/android/provider/MediaStore.html) (if applicable). In this example, I’m going to use the built-in DownloadManager to download an MP3 and handle its completion via a [BroadcastReceiver](http://developer.android.com/reference/android/content/BroadcastReceiver.html).
 
 Before initiating the download, we want to query the DownloadManager to see whether the file is currently being downloaded so we prevent duplicates.
 
@@ -30,7 +30,7 @@ for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
 cur.close();
 ```
 
-I use a <a href="http://developer.android.com/reference/android/app/DownloadManager.Query.html" target="_blank">DownloadManager.Query</a> to filter the information I want to get from the DownloadManager. I only care about the downloads that are either in the queue, are running, or have been successfully finished, and check to see whether the local path where I’m going to save the file exists already exists. If it does, I will not continue with the next step, actually requesting the file for downloading. Keep in mind that querying any Android service, including the DownloadManager, is a blocking action, so you may want to consider moving this code to another thread if you're downloading large amounts of files as to not block the UI and give the appearance of unresponsiveness.
+I use a [DownloadManager.Query](http://developer.android.com/reference/android/app/DownloadManager.Query.html) to filter the information I want to get from the DownloadManager. I only care about the downloads that are either in the queue, are running, or have been successfully finished, and check to see whether the local path where I’m going to save the file exists already exists. If it does, I will not continue with the next step, actually requesting the file for downloading. Keep in mind that querying any Android service, including the DownloadManager, is a blocking action, so you may want to consider moving this code to another thread if you're downloading large amounts of files as to not block the UI and give the appearance of unresponsiveness.
 
 ```java
 if (!isDownloading) {
@@ -50,7 +50,7 @@ if (!isDownloading) {
 }
 ```
 
-To initiate a download, you must create a <a href="http://developer.android.com/reference/android/app/DownloadManager.Request.html" target="_blank">DownloadManager.Request</a> that contains the source, destination, and any optional parameters you specify. In this example, I’m setting the title and description so the notification contains something besides the filename. I’m also specifying that I want the download visible as a notification during the actual download and when it’s completed. Lastly, I specify that I want the file to be added to the MediaStore once it’s finished. Calling enqueue on the DownloadManager will add the file and start the download, returning a long that can be used to easily identify which file finished.
+To initiate a download, you must create a [DownloadManager.Request](http://developer.android.com/reference/android/app/DownloadManager.Request.html) that contains the source, destination, and any optional parameters you specify. In this example, I’m setting the title and description so the notification contains something besides the filename. I’m also specifying that I want the download visible as a notification during the actual download and when it’s completed. Lastly, I specify that I want the file to be added to the MediaStore once it’s finished. Calling enqueue on the DownloadManager will add the file and start the download, returning a long that can be used to easily identify which file finished.
 
 Just downloading the file may be enough for some, but since I want to trigger an action once it’s completed (such as open the file, or add it to an app’s database), I will need to use a BroadcastReceiver to handle the DownloadManager’s completion.
 

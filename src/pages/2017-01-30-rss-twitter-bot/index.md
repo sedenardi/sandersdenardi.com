@@ -11,13 +11,13 @@ tags:
   - javascript
   - nodejs
 ---
-Twitter is a great way to keep abreast of breaking news stories. Reputable news outlets, such as the <a href="https://twitter.com/washingtonpost" target="_blank">The Washington Post</a> and the <a href="https://twitter.com/nytimes" target="_blank">The New York Times</a>, maintain Twitter feeds that tweet out their stories as they're published. Unfortunately, these feeds can contain a lot of noise in the form of duplicates and undesirable content:
+Twitter is a great way to keep abreast of breaking news stories. Reputable news outlets, such as the [The Washington Post](https://twitter.com/washingtonpost) and the [The New York Times](https://twitter.com/nytimes), maintain Twitter feeds that tweet out their stories as they're published. Unfortunately, these feeds can contain a lot of noise in the form of duplicates and undesirable content:
 
 ![](./wpost-twitter.jpg)
 
 While some may find value in stories like these, it's questionable whether they need to see them show up 4 times within 2 days.
 
-Luckily, most publications still maintain web feeds of their stories using RSS. While most people today probably get their news stories online from Twitter or Facebook, RSS feeds give a unduplicated and standardized list of published items, making them ideal sources for a Twitter feed.
+Luckily, most publications still maintain web feeds of their stories using RSS. While most people today probably get their news stories online from Twitter or Facebook, RSS feeds give an unduplicated and standardized list of published items, making them ideal sources for a Twitter feed.
 
 # How It Works
 
@@ -47,17 +47,17 @@ The bots now use a simple DynamoDB table with the primary partition key on the U
 
 ## Parsing and Tweeting
 
-The format of tweets largely follows what the publications' official Twitter feeds use: "[Story Title] [URL]". Both fields exist in every publication's feed, but some feeds also include images. We can extract the images from either the `<content>` or `<description>` fields, or (in the case of Atom feeds) in the `<media:content>` field. Tweeting with media is a 3-step process: download the image from the publication, upload the image to Twitter and get the `media_ids`, and tweet the status string with the `media_ids` attached. An example of an RSS feed with images is <a href="http://www.theverge.com/rss/index.xml" target="_blank">The Verge</a>.
+The format of tweets largely follows what the publications' official Twitter feeds use: "[Story Title] [URL]". Both fields exist in every publication's feed, but some feeds also include images. We can extract the images from either the `<content>` or `<description>` fields, or (in the case of Atom feeds) in the `<media:content>` field. Tweeting with media is a 3-step process: download the image from the publication, upload the image to Twitter and get the `media_ids`, and tweet the status string with the `media_ids` attached. An example of an RSS feed with images is [The Verge](http://www.theverge.com/rss/index.xml).
 
 # Conclusion and Implications
 
 Integrating RSS feeds into your Twitter feed is just another way to customize the news stories you see. While I personally happen to enjoy a de-cluttered feed, you lose any editorializing by whoever runs the social media account, as well as any timely reposting of articles (which happens if a news story becomes relevant after a long time). Taking the human commentary out of posts in your social media feed may seem to go against the spirit of a social network, but so far I am really enjoying a Twitter feed without inessential, duplicated news stories.
 
-All code can be found <a href="https://github.com/sedenardi/rss-tweet" target="_blank">here</a>. These feeds are active, tweet at <a href="https://twitter.com/srednass">@srednass</a> or add an issue to the GitHub project to suggest a new publication's feed.
+All code can be found [here](https://github.com/sedenardi/rss-tweet). These feeds are active, tweet at [@srednass](https://twitter.com/srednass) or add an issue to the GitHub project to suggest a new publication's feed.
 
-- <a href="https://twitter.com/wapo_once" target="_blank">@wapo_once</a> - The Washington Post
-- <a href="https://twitter.com/wsj_once" target="_blank">@wsj_once</a> - Wall Street Journal
-- <a href="https://twitter.com/theverge_once" target="_blank">@theverge_once</a> - The Verge
-- <a href="https://twitter.com/ars_once" target="_blank">@ars_once</a> - Ars Technica
-- <a href="https://twitter.com/nytimes_once" target="_blank">@nytimes_once</a> - The New York Times
-- <a href="https://twitter.com/economist_once" target="_blank">@economist_once</a> - The Economist
+- [@wapo_once](https://twitter.com/wapo_once) - The Washington Post
+- [@wsj_once](https://twitter.com/wsj_once) - Wall Street Journal
+- [@theverge_once](https://twitter.com/theverge_once) - The Verge
+- [@ars_once](https://twitter.com/ars_once) - Ars Technica
+- [@nytimes_once](https://twitter.com/nytimes_once) - The New York Times
+- [@economist_once](https://twitter.com/economist_once) - The Economist

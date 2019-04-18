@@ -38,7 +38,7 @@ This is concise and clear, and the way most would write the query. It returns th
 
 ![](./qp1.png)
 
-Because we combined both query predicates, we're forced to do a <a href="http://technet.microsoft.com/en-us/library/bb326635(v=sql.105).aspx" target="_blank">Key Lookup</a> on the entire result set. This involves going back and looking up in the clustered index each row that satisfies our query.
+Because we combined both query predicates, we're forced to do a [Key Lookup](http://technet.microsoft.com/en-us/library/bb326635(v=sql.105).aspx) on the entire result set. This involves going back and looking up in the clustered index each row that satisfies our query.
 
 This seems redundant, as half of our query already looks at the clustered index on the table.
 
@@ -52,6 +52,6 @@ WHERE EntityID2 = 24434492;
 
 ![](./qp2.png)
 
-Splitting the query up allows us to avoid doing the Key Lookup on the entire result set, and just do it on the part that's necessary. Using <a href="http://msdn.microsoft.com/en-us/library/ms184361.aspx" target="_blank">STATISTICS IO</a> I can see that the second query does less than 10% of the reads as the first. While the first query is fewer lines of code, the second is not only more performant, but easier to debug as both cases can be run separately.
+Splitting the query up allows us to avoid doing the Key Lookup on the entire result set, and just do it on the part that's necessary. Using [STATISTICS IO](http://msdn.microsoft.com/en-us/library/ms184361.aspx) I can see that the second query does less than 10% of the reads as the first. While the first query is fewer lines of code, the second is not only more performant, but easier to debug as both cases can be run separately.
 
-While this example greatly benefits from splitting up the logic in OR statements, not all will. If I were just returning the RelationshipID and had it <a href="http://www.dbadiaries.com/sql-server-covering-index-and-key-lookup" target="_blank">covered</a> in the second index, there would be no need for a Key Lookup at all.
+While this example greatly benefits from splitting up the logic in OR statements, not all will. If I were just returning the RelationshipID and had it [covered](http://www.dbadiaries.com/sql-server-covering-index-and-key-lookup) in the second index, there would be no need for a Key Lookup at all.

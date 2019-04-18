@@ -8,7 +8,7 @@ tags:
   - nginx
   - nodejs
 ---
-One of <a href="http://en.wikipedia.org/wiki/Nginx" target="_blank">Nginx</a>'s popular uses is as a reverse proxy for several different Node.js servers. A reverse proxy makes it easy to point to each separate app without having to remember which instance is on what port. Nginx makes this very easy, but Fedora's <a href="http://en.wikipedia.org/wiki/Security-Enhanced_Linux" target="_blank">SELinux</a> policies make this setup not so straightforward. In this tutorial, I'm going to map 3 Node.js web servers, running on different ports, to different virtual directories on the same domain.
+One of [Nginx](http://en.wikipedia.org/wiki/Nginx)'s popular uses is as a reverse proxy for several different Node.js servers. A reverse proxy makes it easy to point to each separate app without having to remember which instance is on what port. Nginx makes this very easy, but Fedora's [SELinux](http://en.wikipedia.org/wiki/Security-Enhanced_Linux) policies make this setup not so straightforward. In this tutorial, I'm going to map 3 Node.js web servers, running on different ports, to different virtual directories on the same domain.
 
 This example assumes you have Node.js and Nginx installed on your system. I'm going to set up arbitrary web servers running on port 3001, 3002, and 3003, and map them to folders /server1, /server2, and /server3, respectively.
 
@@ -53,7 +53,7 @@ server {
 }
 ```
 
-Replace the `server_name` with your domain name (or computer name if you're on your development machine). From now on the URLs I refer to will direct to http://sanders-laptop.local, but obviously yours will differ. This configuration tells the server to accept requests on port 80 (standard http port) and direct any requests for "/server1" to http://localhost:3001. The `proxy_set_header` settings tell Nginx to pass the incoming client information to the proxied server (more details can be found <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header" target="_blank">here</a> and <a href="http://nginx.org/en/docs/http/websocket.html" target="_blank">here</a>).
+Replace the `server_name` with your domain name (or computer name if you're on your development machine). From now on the URLs I refer to will direct to http://sanders-laptop.local, but obviously yours will differ. This configuration tells the server to accept requests on port 80 (standard http port) and direct any requests for "/server1" to http://localhost:3001. The `proxy_set_header` settings tell Nginx to pass the incoming client information to the proxied server (more details can be found [here](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header) and [here](http://nginx.org/en/docs/http/websocket.html)).
 
 In order for Nginx to use our new configuration file, I must restart the service.
 
@@ -72,7 +72,7 @@ connecting to upstream, client: 192.168.1.134, server: sanders-laptop.local, req
 host: "sanders-laptop.local"
 ```
 
-You may have also seen an SELinux alert pop up. What's happening is that SELinux is blocking Nginx from accessing our new port 3001 because I haven't explicitly granted it permission to do so. Thankfully it's easy to designate 3001 as an HTTP port in SELinux's eyes (as described <a href="http://wiki.gentoo.org/wiki/SELinux/Tutorials/Managing_network_port_labels" target="_blank">here</a>):
+You may have also seen an SELinux alert pop up. What's happening is that SELinux is blocking Nginx from accessing our new port 3001 because I haven't explicitly granted it permission to do so. Thankfully it's easy to designate 3001 as an HTTP port in SELinux's eyes (as described [here](http://wiki.gentoo.org/wiki/SELinux/Tutorials/Managing_network_port_labels)):
 
 ```
 semanage port -a -t http_port_t -p tcp 3001

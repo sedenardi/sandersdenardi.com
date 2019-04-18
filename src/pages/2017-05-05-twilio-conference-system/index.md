@@ -8,7 +8,7 @@ tags:
   - javascript
   - nodejs
 ---
-Twilio's documentation is very useful in showing some of the possible applications of their telephony system. For example, <a href="https://www.twilio.com/docs/guides/how-to-create-conference-calls-in-node-js" target="_blank">they have a guide</a> that walks you through the steps involved in setting up a conference call:
+Twilio's documentation is very useful in showing some of the possible applications of their telephony system. For example, [they have a guide](https://www.twilio.com/docs/guides/how-to-create-conference-calls-in-node-js) that walks you through the steps involved in setting up a conference call:
 
 - Buying and configuring a phone number
 - Setting up a basic Node.js web application to handle incoming calls
@@ -32,9 +32,9 @@ Conference systems, like many phone systems, can be represented as simple state 
 
 Twilio's guide introduced the concept of the TwiML verbs `<Dial>` and `<Conference>` to actually join the conference. To implement our system's state machine, were going to use a few more:
 
-- `<Say>`: Fairly self-explanatory, it uses Twilio's text-to-speech to recite back to the caller whatever you want. You can select between several voices and languages. <a href="https://www.twilio.com/docs/api/twiml/say" target="_blank">Docs.</a>
-- `<Redirect>`: Again, self-explanatory, simply redirects the call to another route. <a href="https://www.twilio.com/docs/api/twiml/redirect" target="_blank">Docs.</a>
-- `<Gather>`: This introduces interactivity to the system. This verb waits for some input from the caller's dialer and redirects to another route, passing in the digits the caller entered. <a href="https://www.twilio.com/docs/api/twiml/gather" target="_blank">Docs.</a>
+- `<Say>`: Fairly self-explanatory, it uses Twilio's text-to-speech to recite back to the caller whatever you want. You can select between several voices and languages. [Docs](https://www.twilio.com/docs/api/twiml/say)
+- `<Redirect>`: Again, self-explanatory, simply redirects the call to another route. [Docs](https://www.twilio.com/docs/api/twiml/redirect)
+- `<Gather>`: This introduces interactivity to the system. This verb waits for some input from the caller's dialer and redirects to another route, passing in the digits the caller entered. [Docs](https://www.twilio.com/docs/api/twiml/gather)
 
 When the system receives a phone call, the caller should hear a greeting, letting them know they reached the right number.
 
@@ -49,7 +49,7 @@ app.post('/voice', (request, response) => {
 });
 ```
 
-After we say welcome (in the <a href="https://www.twilio.com/docs/api/twiml/say#attributes-voice" target="_blank">friendly "alice" voice</a>), we redirect to the route that gathers the access code.
+After we say welcome (in the [friendly "alice" voice](https://www.twilio.com/docs/api/twiml/say#attributes-voice)), we redirect to the route that gathers the access code.
 
 ```js
 app.post('/gather', (request, response) => {
@@ -111,4 +111,4 @@ We showed how to easy it is to setup a robust, full-fledged conference system, a
 
 Additionally, one of the requirements of any robust phone system is reliability and uptime. Ideally your applications never crash or otherwise become unresponsive, but in reality this can happen at any time. One of the ways to mitigate this concern is to move your phone system to a completely separate application. Because of the on-demand nature of call handling, serverless functions, such as AWS Lambda, are an ideal candidate to handle incoming phone requests. Combined with AWS API Gateway, you can create an extremely reliable, and practically infinitely scalable phone system.
 
-All code can be found <a href="https://github.com/sedenardi/twilio-conference" target="_blank">here</a>.
+All code can be found [here](https://github.com/sedenardi/twilio-conference).

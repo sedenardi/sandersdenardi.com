@@ -11,7 +11,7 @@ tags:
   - javascript
   - nodejs
 ---
-Shortly after creating the <a href="/rss-twitter-bot/">RSS twitter bot</a> to tweet out an unduplicated list of published items, I realized a few issues with the approach:
+Shortly after creating the [RSS twitter bot](/rss-twitter-bot/) to tweet out an unduplicated list of published items, I realized a few issues with the approach:
 
 - RSS feeds aren't available for all publications
 - RSS feeds are hyper-specific, which can lead to blind spots if not all feeds are considered
@@ -26,9 +26,9 @@ We'll still need a way to keep track of the articles that are retweeted so we do
 
 Using the article's URL as a key was simple with an RSS feed, since it was the key itself for the feed. With tweets, URLs are usually shortened, making them unsuitable for use as a unique key because the same link would be shortened to 2 separate links.
 
-To fix this issue, we can take the shortened link and resolve it by using the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4" target="_blank">HEAD</a> HTTP method, and follow any redirects. The HEAD method is the same as a GET, but the server won't return the body of the target page. This is great because we don't care about the body, and we want the call to be quick. Following redirects is necessary because a shortened link is essentially just a redirect.
+To fix this issue, we can take the shortened link and resolve it by using the [HEAD](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4) HTTP method, and follow any redirects. The HEAD method is the same as a GET, but the server won't return the body of the target page. This is great because we don't care about the body, and we want the call to be quick. Following redirects is necessary because a shortened link is essentially just a redirect.
 
-The popular <a href="https://github.com/request/request" target="_blank">request</a> module has an easy way to perform this resolution:
+The popular [request](https://github.com/request/request) module has an easy way to perform this resolution:
 
 ```js
 request({
@@ -42,4 +42,4 @@ request({
 
 After that, we can determine whether the incoming tweet contains a link that's been retweeted before, and use the Twitter API to retweet it if not.
 
-All code and current list of feeds can be found <a href="https://github.com/sedenardi/once-tweet" target="_blank">here</a>. These feeds are active, tweet at <a href="https://twitter.com/srednass">@srednass</a> or add an issue to the GitHub project to suggest a new publication's feed.
+All code and current list of feeds can be found [here](https://github.com/sedenardi/once-tweet). These feeds are active, tweet at [@srednass](https://twitter.com/srednass) or add an issue to the GitHub project to suggest a new publication's feed.

@@ -14,7 +14,7 @@ SSH tunnels are used to expose your local development machine to the internet. T
 - developing APIs for mobile apps
 - building webhook integrations with 3rd parties
 
-They work by establishing a secure connection (an SSH tunnel) between your machine and a publicly accessible machine, which then forwards any requests meant for your machine to you. There are several services that provide this functionality, such as <a href="https://ngrok.com/" target="_blank">ngrok</a> and <a href="https://serveo.net/#intro" target="_blank">Serveo</a>, but you may wish to set up your own for any variety of reasons (price, security).
+They work by establishing a secure connection (an SSH tunnel) between your machine and a publicly accessible machine, which then forwards any requests meant for your machine to you. There are several services that provide this functionality, such as [ngrok](https://ngrok.com/) and [Serveo](https://serveo.net/#intro), but you may wish to set up your own for any variety of reasons (price, security).
 
 This guide will describe:
 
@@ -25,7 +25,7 @@ This guide will describe:
 ## Remote Machine
 
 In this post I use an AWS EC2 instance as the publically accessible machine, any cloud or traditional hosting provider will work. We'll use 
-<a href="https://www.nginx.com/" target="_blank">nginx</a> as our web server to perform the routing and SSL termination. Once you've installed nginx and verified that it's publicly accessible (via Security Groups, firewall configuration, or equivalent), it's time to edit the nginx configuration files.
+[nginx](https://www.nginx.com/) as our web server to perform the routing and SSL termination. Once you've installed nginx and verified that it's publicly accessible (via Security Groups, firewall configuration, or equivalent), it's time to edit the nginx configuration files.
 
 We'll create two files in the `conf/` subdirectory where nginx is installed. The first, we'll call `http.conf`, simply redirects any http requests to the equivalent https address.
 
@@ -88,7 +88,7 @@ map $http_host $port {
 }
 ```
 
-This <a href="http://nginx.org/en/docs/http/ngx_http_map_module.html" target="_blank">`map`</a> block creates a new variable `$port` that's dependent on the value of the incoming `$http_host` hostname. So, whenever the server receives a request meant for `sanders2.example.com`, it sets the value of `$port` to `3002`, which is used in the next block.
+This [map](http://nginx.org/en/docs/http/ngx_http_map_module.html) block creates a new variable `$port` that's dependent on the value of the incoming `$http_host` hostname. So, whenever the server receives a request meant for `sanders2.example.com`, it sets the value of `$port` to `3002`, which is used in the next block.
 
 ```
 server {
@@ -126,7 +126,7 @@ Remember to restart nginx after saving any configuration files or SSL certificat
 
 #### A Note on SSL Certificates
 
-For SSL certificates I use <a href="https://letsencrypt.org/" target="_blank">Let's Encrypt</a>, as they're free and allow you to programmatically renew the certs. As of May 2018, Let's Encrypt supports creating wildcard certificates. Before, you could create a single certificate that covered multiple domains, but you had to specify them at creation time. With wildcard certificates, you can create a single certificate for `*.example.com` and use it for all 3 of the domains I use in my example. This minimizes the work needed to add new users.
+For SSL certificates I use [Let's Encrypt](https://letsencrypt.org/), as they're free and allow you to programmatically renew the certs. As of May 2018, Let's Encrypt supports creating wildcard certificates. Before, you could create a single certificate that covered multiple domains, but you had to specify them at creation time. With wildcard certificates, you can create a single certificate for `*.example.com` and use it for all 3 of the domains I use in my example. This minimizes the work needed to add new users.
 
 ## DNS Configuration
 
@@ -142,7 +142,7 @@ The last step is the easiest. Start a web server on your machine, open the termi
 ssh -i ~/keys/keypair.pem -fN -R 3001:localhost:80 ec2-user@169.254.255.254
 ```
 
-The <a href="https://man.openbsd.org/ssh" target="_blank">arguments</a> used are:
+The [arguments](https://man.openbsd.org/ssh) used are:
 
 - `-i` - specify an identity file for the remote machine (optional, but recommended over using a password)
 - `-f` - forks the ssh process into the background
@@ -151,7 +151,7 @@ The <a href="https://man.openbsd.org/ssh" target="_blank">arguments</a> used are
 
 After running that and navigating to the domain corresponding to the remote port you specified, you should see the result of your local machine's web server.
 
-Because it can be annoying to have to remember this command, and open a terminal to type it in every time, I recommend using a task bar/menu bar program that lets you run arbitrary commands at the click of a button. On MacOS, I use <a href="https://getbitbar.com/" target="_blank">BitBar</a> with the following script (with your own configuration details swapped out):
+Because it can be annoying to have to remember this command, and open a terminal to type it in every time, I recommend using a task bar/menu bar program that lets you run arbitrary commands at the click of a button. On MacOS, I use [BitBar](https://getbitbar.com/) with the following script (with your own configuration details swapped out):
 
 ```
 #!/bin/bash

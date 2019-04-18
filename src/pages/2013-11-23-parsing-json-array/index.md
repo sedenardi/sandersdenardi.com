@@ -20,7 +20,7 @@ var test = "[\"Thu\",\"8:25\",\"Info\",,\"Entity 1\",\"17\",\"Entity 2\",\"13\",
 console.log(JSON.parse(test)[0]);
 ```
 
-If you look at the <a href="http://www.json.org/" target="_blank">JSON syntax guide</a> for an array, you'll see that it must encounter an object before another comma.
+If you look at the [JSON syntax guide](http://www.json.org/) for an array, you'll see that it must encounter an object before another comma.
 
 ![](http://www.json.org/array.gif)
 
