@@ -10,7 +10,7 @@ const Social = function(props) {
   if (props.social.twitter) {
     social.push(
       <li key="2" className={itemCls}>
-        <a href={`https://twitter.com/${props.social.twitter}`} target="_blank">
+        <a href={`https://twitter.com/${props.social.twitter}`} target="_blank" rel="nofollow">
           <img alt="Twitter" className="tw-w-12 lg:tw-w-16" src={twitterIcon} />
         </a>
       </li>
@@ -19,7 +19,7 @@ const Social = function(props) {
   if (props.social.github) {
     social.push(
       <li key="1" className={itemCls}>
-        <a href={`https://github.com/${props.social.github}`} target="_blank">
+        <a href={`https://github.com/${props.social.github}`} target="_blank" rel="nofollow">
           <img alt="GitHub" className="tw-w-12 lg:tw-w-16" src={githubIcon} />
         </a>
       </li>
@@ -68,7 +68,7 @@ const Projects = function(props) {
         {props.projects.map((p) => {
           return (
             <li key={p.name} className="tw-pt-4">
-              <a href={p.url} target="_blank">{p.name}</a>
+              <a href={p.url} target="_blank" rel="nofollow">{p.name}</a>
             </li>
           );
         })}
