@@ -17,7 +17,7 @@ const PostItem = function(props) {
         {title}
       </h3>
       <div className="tw-mt-1 tw-text-grey-darker tw-font-light">{post.frontmatter.date}</div>
-      <p className="tw-mt-2 tw-text-lg tw-font-light tw-leading-normal"
+      <p className="tw-text-lg tw-font-light tw-leading-normal"
         dangerouslySetInnerHTML={{
           __html: body,
         }} />
