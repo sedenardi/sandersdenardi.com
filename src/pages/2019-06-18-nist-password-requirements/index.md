@@ -32,11 +32,18 @@ For password collection and transmission:
 - allow users to **paste passwords** into login forms (facilitating the use of password managers)
 - allow the user to **display the password** they've entered, either entirely or one character at a time, so they may verify their input
 - only transmit passwords over an **encrypted channel**, such as SSL
+- **don't use SMS** or voice (PSTN) for two-factor/multi-factor authentication (2FA/MFA), instead an app or dedicated device for one-time passwords
 
 And recommendations for how to store passwords include:
 
 - store passwords salted and hashed using a suitable one-way key derivation function (such as PBKDF2)
-- use a cost (work) factor suitably high given the function type (at least 10k for PBKDF2) and practical machine performance 
+- use a cost (work) factor suitably high given the function type (at least 10k for PBKDF2) and practical machine performance
+
+## Impressions
+
+The NIST guidelines contain several recommendations that run counter to what we commonly experience on systems and websites today. Minimum password lengths seem to be around 8 characters, but many sites often imposed seemingly arbitrary limits on the maximum length. Both [Apple](https://support.apple.com/en-us/HT201355) and [Microsoft](https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/password-must-meet-complexity-requirements) impose password complexity requirements. whereas [Amazon](https://www.amazon.com/gp/help/customer/display.html?nodeId=201909100) doesn't. [Password phrases](https://xkcd.com/936/) (long strings of words) make for good passwords, as they're memorable and hard to brute-force crack, and password complexity requirements not only prevent their use but breed hard-to-remember strings. Without a password manager, users may be inclined to write them down or otherwise save them in an insecure location, diminishing their overall security. Moreover, using a known-bad password list weeds out most of the poor passwords that complexity rules were created to prevent.
+
+As mobile devices are nearly ubiquitous, it's become commonplace to use a user's mobile phone number as an identifier, since it doesn't change often and you can verify whether people have access to it. However, you can't guarantee that the user is the *only* person who has access to the mobile number. SIM Swapping, the practice of surreptitiously overtaking a mobile account, has become a [common way](https://krebsonsecurity.com/tag/sim-swapping/) to target and exploit 2FA that uses SMS or voice as the second step. Through phishing, social engineering, or black market websites, attackers can defeat an ostensibly secure account. [Google Authenticator](https://github.com/google/google-authenticator/wiki) and [Authy](https://authy.com/) both provide software time-based one-time passwords, whereas [YubiKey](https://www.yubico.com/products/yubikey-hardware-3/) provides a physical security key for 2FA and MFA.
 
 ## Implementation Thoughts
 
