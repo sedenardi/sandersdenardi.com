@@ -153,7 +153,7 @@ After running that and navigating to the domain corresponding to the remote port
 
 Because it can be annoying to have to remember this command, and open a terminal to type it in every time, I recommend using a task bar/menu bar program that lets you run arbitrary commands at the click of a button. On MacOS, I use [BitBar](https://getbitbar.com/) with the following script (with your own configuration details swapped out):
 
-```
+```shell
 #!/bin/bash
 
 # CMD="ssh -i ~/keys/keypair.pem -fN -R 3001:localhost:80 ec2-user@169.254.255.254"
