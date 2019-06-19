@@ -45,4 +45,8 @@ blockquote {
   @apply .tw-px-4;
 }
 
+strong {
+  @apply .tw-font-bold;
+}
+
 @import 'prism.scss';
