@@ -24,4 +24,4 @@ The distribution of leaked phone numbers is pretty interesting. Lots of northeas
 
 Both maps closely follow the same distribution, which makes sense. Because I chose arbitrary scales to represent the density in each location it's tough to do in-depth analysis by just looking at the maps, but the data from Snapchat is easily accessible for anyone to dig into.
 
-Interactive version of these maps are available [here](https://www.nerdshit.net/snapchat-map/). All code is available on [GitHub](https://github.com/sedenardi/snapchat-map).
+Interactive version of these maps are available [here](https://www.sandersdenardi.com/projects/snapchat-map/). All code is available on [GitHub](https://github.com/sedenardi/snapchat-map).

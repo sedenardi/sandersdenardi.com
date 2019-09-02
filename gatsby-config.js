@@ -15,7 +15,7 @@ module.exports = {
     projects: [
       { name: 'Scaffmap', url: 'https://www.sprinkmap.com/scaff' },
       { name: 'Central Walk', url: 'https://www.sandersdenardi.com/projects/central-walk/' },
-      { name: 'E-Bikes', url: 'https://www.sandersdenardi.com/ebike/' },
+      { name: 'E-Bikes', url: 'https://www.sandersdenardi.com/projects/ebike/' },
       { name: 'SVUViz', url: 'https://svuviz.sandersdenardi.com/' },
       { name: 'Festival Guide', url: 'https://www.sandersdenardi.com/projects/festival-guide/' },
       { name: 'Score Tweets', url: 'https://github.com/sedenardi/score-tweets' },
@@ -120,7 +120,8 @@ module.exports = {
       options: {
         bucketName: 'sandersdenardi.com',
         protocol: siteAddress.protocol.slice(0, -1),
-        hostname: siteAddress.hostname
+        hostname: siteAddress.hostname,
+        removeNonexistentObjects: false
       },
     }
   ],
